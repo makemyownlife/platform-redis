@@ -12,10 +12,11 @@
 
     <dependencies>
 
+        <!-- 参看 https://github.com/redisson/redisson  -->
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>3.0.1</version>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.12.0</version>
         </dependency>
 
     </dependencies>
