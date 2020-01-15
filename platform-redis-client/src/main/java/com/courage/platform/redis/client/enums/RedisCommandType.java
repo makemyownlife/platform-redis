@@ -13,7 +13,6 @@ public enum RedisCommandType {
     PEXPIRE,
     PEXPIREAT,
 
-
     //str 命令
     INCR, INCRBY, DECR, DECRBY,
     INCR_EX, INCRBY_EX, DECR_EX, DECRBY_EX,
