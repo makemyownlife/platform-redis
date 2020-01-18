@@ -1,10 +1,15 @@
 package com.courage.platform.redis.client.command.impl;
 
 import com.courage.platform.redis.client.command.PlatformRedisCommand;
-
-import java.util.Set;
+import org.redisson.api.RedissonClient;
 
 public class PlatformBasicCommand implements PlatformRedisCommand {
+
+    private RedissonClient redissonClient;
+
+    public PlatformBasicCommand(RedissonClient redissonClient) {
+        this.redissonClient = redissonClient;
+    }
 
     public Long del(String key) {
         return null;
@@ -35,14 +40,6 @@ public class PlatformBasicCommand implements PlatformRedisCommand {
     }
 
     public Long pexpireAt(String key, long unixTime) {
-        return null;
-    }
-
-    public Set<String> keys(String pattern) {
-        return null;
-    }
-
-    public Set<String> keysWithOutNamespace(String pattern) {
         return null;
     }
 
