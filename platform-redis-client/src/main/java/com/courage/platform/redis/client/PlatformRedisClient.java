@@ -1,6 +1,8 @@
 package com.courage.platform.redis.client;
 
+import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +16,8 @@ public class PlatformRedisClient {
 
     private RedissonClient redissonClient;
 
-    public PlatformRedisClient(PlatformRedisClientBuilder platformRedisClientBuilder) {
-        this.redissonClient = platformRedisClientBuilder.buildClient();
+    public PlatformRedisClient(Config config) {
+        this.redissonClient = Redisson.create(config);
     }
 
 }

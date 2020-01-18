@@ -1,7 +1,10 @@
 package com.courage.platform.redis.client.command.impl;
 
 import com.courage.platform.redis.client.command.PlatformRedisCommand;
+import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
+
+import java.util.concurrent.TimeUnit;
 
 public class PlatformBasicCommand implements PlatformRedisCommand {
 
@@ -11,36 +14,19 @@ public class PlatformBasicCommand implements PlatformRedisCommand {
         this.redissonClient = redissonClient;
     }
 
-    public Long del(String key) {
-        return null;
-    }
-
-    public Long ttl(String key) {
-        return null;
+    public boolean del(String key) {
+        RMap map = redissonClient.getMap(key);
+        return map.delete();
     }
 
     public boolean exists(String key) {
-        return false;
+        RMap map = redissonClient.getMap(key);
+        return map.isExists();
     }
 
-    public String type(String key) {
-        return null;
-    }
-
-    public Long expire(String key, int seconds) {
-        return null;
-    }
-
-    public Long expireAt(String key, long unixTime) {
-        return null;
-    }
-
-    public Long pexpire(String key, long seconds) {
-        return null;
-    }
-
-    public Long pexpireAt(String key, long unixTime) {
-        return null;
+    public boolean expire(String key, int seconds) {
+        RMap map = redissonClient.getMap(key);
+        return map.expire(seconds, TimeUnit.SECONDS);
     }
 
 }

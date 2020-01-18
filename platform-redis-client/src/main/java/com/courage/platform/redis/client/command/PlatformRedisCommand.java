@@ -6,20 +6,10 @@ public interface PlatformRedisCommand {
 
     static final byte[] EX = "EX".getBytes();
 
-    Long del(String key);
-
-    Long ttl(String key);
+    boolean del(String key);
 
     boolean exists(String key);
 
-    String type(String key);
-
-    Long expire(String key, int seconds);
-
-    Long expireAt(String key, long unixTime);
-
-    Long pexpire(String key, long seconds);
-
-    Long pexpireAt(String key, long unixTime);
+    boolean expire(String key, int seconds);
 
 }

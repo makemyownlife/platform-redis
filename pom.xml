@@ -17,6 +17,7 @@
     <modules>
         <module>platform-redis-client-springboot-starter</module>
         <module>platform-redis-client</module>
+        <module>platform-redis-core</module>
     </modules>
 
 </project>
