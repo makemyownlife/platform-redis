@@ -1,10 +1,10 @@
 package com.courage.platform.redis.client.command.impl;
 
-import com.courage.platform.redis.client.command.RedisCommand;
+import com.courage.platform.redis.client.command.PlatformRedisCommand;
 
 import java.util.Set;
 
-public class CommonCommand implements RedisCommand {
+public class PlatformBasicCommand implements PlatformRedisCommand {
 
     public Long del(String key) {
         return null;

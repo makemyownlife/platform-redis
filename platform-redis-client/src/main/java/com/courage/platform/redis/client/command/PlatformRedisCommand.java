@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.command;
 
-public interface RedisCommand {
+public interface PlatformRedisCommand {
 
     static final byte[] NX = "NX".getBytes();
 

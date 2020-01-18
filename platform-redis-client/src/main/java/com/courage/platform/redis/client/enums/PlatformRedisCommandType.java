@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.enums;
 
-public enum RedisCommandType {
+public enum PlatformRedisCommandType {
 
     //common 命令
     DEL,
