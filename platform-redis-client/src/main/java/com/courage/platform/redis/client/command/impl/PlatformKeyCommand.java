@@ -1,5 +1,6 @@
-package com.courage.platform.redis.client.command;
+package com.courage.platform.redis.client.command.impl;
 
+import com.courage.platform.redis.client.command.PlatformRedisCommand;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 
