@@ -5,6 +5,8 @@ package com.courage.platform.redis.client.command;
  */
 public interface PlatformStringCommand extends PlatformRedisCommand {
 
+    String get(String key);
+
     String set(String key, String value);
 
     String setEx(String key, String value, int second);

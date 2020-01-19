@@ -13,6 +13,10 @@ public class PlatformStringCommandImpl extends PlatformKeyCommand implements Pla
         super(redissonClient);
     }
 
+    public String get(String key) {
+        return null;
+    }
+
     public String set(String key, String value) {
         return null;
     }
