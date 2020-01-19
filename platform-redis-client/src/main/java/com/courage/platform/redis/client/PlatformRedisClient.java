@@ -33,4 +33,10 @@ public class PlatformRedisClient {
         return platformStringCommand;
     }
 
+    public void shutdown() {
+        if (this.redissonClient != null) {
+            this.redissonClient.shutdown();
+        }
+    }
+
 }

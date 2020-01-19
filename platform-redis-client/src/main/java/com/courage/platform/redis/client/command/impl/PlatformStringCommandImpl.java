@@ -1,6 +1,8 @@
 package com.courage.platform.redis.client.command.impl;
 
+import com.courage.platform.redis.client.command.PlatformInvokeCommand;
 import com.courage.platform.redis.client.command.PlatformStringCommand;
+import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 
@@ -16,32 +18,59 @@ public class PlatformStringCommandImpl extends PlatformKeyCommand implements Pla
         super(redissonClient);
     }
 
-    public String get(String key) {
-        RBucket<String> result = getRedissonClient().getBucket(key);
-        if (result == null || !result.isExists()) {
-            return null;
-        }
-        return result.get();
+    public String get(final String key) {
+        return invokeCommand(new PlatformInvokeCommand<String>(PlatformRedisCommandType.GET) {
+            @Override
+            public String exe(RedissonClient redissonClient) {
+                RBucket<String> result = getRedissonClient().getBucket(key);
+                if (result == null || !result.isExists()) {
+                    return null;
+                }
+                return result.get();
+            }
+        });
     }
 
-    public void set(String key, String value) {
-        RBucket<String> result = getRedissonClient().getBucket(key);
-        result.set(value);
+    public void set(final String key, final String value) {
+        invokeCommand(new PlatformInvokeCommand<String>(PlatformRedisCommandType.SET) {
+            @Override
+            public String exe(RedissonClient redissonClient) {
+                RBucket<String> result = getRedissonClient().getBucket(key);
+                result.set(value);
+                return null;
+            }
+        });
     }
 
-    public void setEx(String key, String value, int second) {
-        RBucket<String> result = getRedissonClient().getBucket(key);
-        result.set(value, second, TimeUnit.SECONDS);
+    public void setEx(final String key, final String value, final int second) {
+        invokeCommand(new PlatformInvokeCommand<String>(PlatformRedisCommandType.SET_EX) {
+            @Override
+            public String exe(RedissonClient redissonClient) {
+                RBucket<String> result = getRedissonClient().getBucket(key);
+                result.set(value, second, TimeUnit.SECONDS);
+                return null;
+            }
+        });
     }
 
-    public boolean setNx(String key, String value) {
-        RBucket<String> result = getRedissonClient().getBucket(key);
-        return result.trySet(value);
+    public boolean setNx(final String key, final String value) {
+        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.SET_NX) {
+            @Override
+            public Boolean exe(RedissonClient redissonClient) {
+                RBucket<String> result = getRedissonClient().getBucket(key);
+                return result.trySet(value);
+            }
+        });
     }
 
-    public boolean setNx(String key, String value, int aliveSecond) {
-        RBucket<String> result = getRedissonClient().getBucket(key);
-        return result.trySet(value, aliveSecond, TimeUnit.SECONDS);
+    public boolean setNx(final String key, final String value, final int aliveSecond) {
+        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.SET_NX) {
+            @Override
+            public Boolean exe(RedissonClient redissonClient) {
+                RBucket<String> result = getRedissonClient().getBucket(key);
+                return result.trySet(value, aliveSecond, TimeUnit.SECONDS);
+            }
+        });
     }
 
 }
