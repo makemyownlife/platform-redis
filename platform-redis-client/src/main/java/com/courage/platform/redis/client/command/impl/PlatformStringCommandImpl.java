@@ -1,7 +1,10 @@
 package com.courage.platform.redis.client.command.impl;
 
 import com.courage.platform.redis.client.command.PlatformStringCommand;
+import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * string command 实现
@@ -14,31 +17,31 @@ public class PlatformStringCommandImpl extends PlatformKeyCommand implements Pla
     }
 
     public String get(String key) {
-        return null;
+        RBucket<String> result = getRedissonClient().getBucket(key);
+        if (result == null || !result.isExists()) {
+            return null;
+        }
+        return result.get();
     }
 
-    public String set(String key, String value) {
-        return null;
+    public void set(String key, String value) {
+        RBucket<String> result = getRedissonClient().getBucket(key);
+        result.set(value);
     }
 
-    public String setEx(String key, String value, int second) {
-        return null;
+    public void setEx(String key, String value, int second) {
+        RBucket<String> result = getRedissonClient().getBucket(key);
+        result.set(value, second, TimeUnit.SECONDS);
     }
 
-    public Long setNx(String key, String value) {
-        return null;
+    public boolean setNx(String key, String value) {
+        RBucket<String> result = getRedissonClient().getBucket(key);
+        return result.trySet(value);
     }
 
-    public Long setNx(String key, String value, int aliveSecond) {
-        return null;
-    }
-
-    public String getAndSet(String key, String value) {
-        return null;
-    }
-
-    public String setNxEx(String key, String value, int second) {
-        return null;
+    public boolean setNx(String key, String value, int aliveSecond) {
+        RBucket<String> result = getRedissonClient().getBucket(key);
+        return result.trySet(value, aliveSecond, TimeUnit.SECONDS);
     }
 
 }

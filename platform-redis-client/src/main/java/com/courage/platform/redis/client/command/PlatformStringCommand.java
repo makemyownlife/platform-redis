@@ -7,16 +7,12 @@ public interface PlatformStringCommand extends PlatformRedisCommand {
 
     String get(String key);
 
-    String set(String key, String value);
+    void set(String key, String value);
 
-    String setEx(String key, String value, int second);
+    void setEx(String key, String value, int second);
 
-    Long setNx(String key, String value);
+    boolean setNx(String key, String value);
 
-    Long setNx(String key, String value, int aliveSecond);
-
-    String getAndSet(String key, String value);
-
-    String setNxEx(String key, String value, int second);
+    boolean setNx(String key, String value, int aliveSecond);
 
 }
