@@ -1,5 +1,6 @@
 package com.courage.platform.redis.client;
 
+import com.courage.platform.redis.client.command.PlatformStringCommand;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -16,8 +17,14 @@ public class PlatformRedisClient {
 
     private RedissonClient redissonClient;
 
+    private PlatformStringCommand platformStringCommand;
+
     public PlatformRedisClient(Config config) {
         this.redissonClient = Redisson.create(config);
+    }
+
+    public void createCommands() {
+        this.platformStringCommand = new PlatformStringCommand();
     }
 
 }
