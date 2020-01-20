@@ -35,7 +35,7 @@ public class PlatformKeyCommand implements PlatformRedisCommand {
             @Override
             public Boolean exe(RedissonClient redissonClient) {
                 RMap map = redissonClient.getMap(key);
-                return map.delete();
+                return map.isExists();
             }
         });
     }
