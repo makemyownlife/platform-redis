@@ -3,6 +3,8 @@ package com.courage.platform.redis.client.test;
 import com.courage.platform.redis.client.PlatformRedisClient;
 import org.redisson.config.Config;
 
+import java.util.ArrayList;
+
 /**
  * Created by zhangyong on 2020/1/18.
  */
@@ -13,7 +15,7 @@ public class PlatformRedisClientUnitTest {
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
         PlatformRedisClient platformRedisClient = new PlatformRedisClient(config);
 
-        platformRedisClient.getPlatformStringCommand().set("hello", "李林");
+        platformRedisClient.getPlatformStringCommand().set("hello", "zhangyogn");
 
         String value = platformRedisClient.getPlatformStringCommand().get("hello");
         System.out.println(value);
@@ -26,6 +28,7 @@ public class PlatformRedisClientUnitTest {
         System.out.println(s1);
         System.out.println(s2);
 
+        platformRedisClient.getPlatformListCommand().lpush("list", new ArrayList<String>());
     }
 
 }
