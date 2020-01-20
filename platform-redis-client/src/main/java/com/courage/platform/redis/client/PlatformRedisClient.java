@@ -1,6 +1,8 @@
 package com.courage.platform.redis.client;
 
+import com.courage.platform.redis.client.command.PlatformAtomicCommand;
 import com.courage.platform.redis.client.command.PlatformStringCommand;
+import com.courage.platform.redis.client.command.impl.PlatformAtomicCommandImpl;
 import com.courage.platform.redis.client.command.impl.PlatformStringCommandImpl;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -20,6 +22,8 @@ public class PlatformRedisClient {
 
     private PlatformStringCommand platformStringCommand;
 
+    private PlatformAtomicCommand platformAtomicCommand;
+
     public PlatformRedisClient(Config config) {
         this.redissonClient = Redisson.create(config);
         this.createCommands();
@@ -27,10 +31,15 @@ public class PlatformRedisClient {
 
     private void createCommands() {
         this.platformStringCommand = new PlatformStringCommandImpl(this.redissonClient);
+        this.platformAtomicCommand = new PlatformAtomicCommandImpl(this.redissonClient);
     }
 
     public PlatformStringCommand getPlatformStringCommand() {
         return platformStringCommand;
+    }
+
+    public PlatformAtomicCommand getPlatformAtomicCommand() {
+        return platformAtomicCommand;
     }
 
     public void shutdown() {

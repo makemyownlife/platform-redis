@@ -1,6 +1,9 @@
 package com.courage.platform.redis.client.command.impl;
 
 import com.courage.platform.redis.client.command.PlatformAtomicCommand;
+import com.courage.platform.redis.client.command.PlatformInvokeCommand;
+import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
+import org.redisson.api.RAtomicLong;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +16,14 @@ public class PlatformAtomicCommandImpl extends PlatformKeyCommand implements Pla
         super(redissonClient);
     }
 
-    public Long incr(String key) {
-        return null;
+    public Long incr(final String key) {
+        return invokeCommand(new PlatformInvokeCommand<Long>(PlatformRedisCommandType.INCR) {
+            @Override
+            public Long exe(RedissonClient redissonClient) {
+                RAtomicLong result = getRedissonClient().getAtomicLong(key);
+                return result.get();
+            }
+        });
     }
 
     public Long incrBy(String key, long incValue) {
