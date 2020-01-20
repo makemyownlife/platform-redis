@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface PlatformListCommand {
 
-    boolean lpush(final String key, final Object o);
+    Boolean lpush(final String key, final Object o);
 
     <T> List<T> lrange(final String key, final int startNum, final int endNum);
 

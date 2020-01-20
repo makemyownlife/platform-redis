@@ -113,5 +113,5 @@ public class PlatformAtomicCommandImpl extends PlatformKeyCommand implements Pla
             }
         });
     }
-
+    
 }

@@ -2,16 +2,10 @@ package com.courage.platform.redis.client.enums;
 
 public enum PlatformRedisCommandType {
 
-    //common 命令
+    //key 命令
     DEL,
-    TTL,
-    KEYS,
     EXISTS,
-    TYPE,
     EXPIRE,
-    EXPIREAT,
-    PEXPIRE,
-    PEXPIREAT,
 
     //str 命令
     INCR, INCRBY, DECR, DECRBY,
