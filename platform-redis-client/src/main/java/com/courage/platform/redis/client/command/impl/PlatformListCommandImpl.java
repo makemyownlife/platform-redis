@@ -68,7 +68,6 @@ public class PlatformListCommandImpl extends PlatformKeyCommand implements Platf
                 return (T) result.pollFirst();
             }
         });
-
     }
 
     public boolean rpush(final String key, final Object o) {
