@@ -16,6 +16,6 @@ public interface PlatformListCommand {
 
     <T> T lpop(final String key);
 
-    Long rpush(final String key, final Object... o);
+    boolean rpush(final String key, final Object o);
 
 }

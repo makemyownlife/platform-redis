@@ -35,7 +35,7 @@ public class PlatformListCommandImpl extends PlatformKeyCommand implements Platf
 
     public <T> T rpop(String key) {
         RBlockingDeque result = getRedissonClient().getBlockingDeque(key);
-        return (T) result.pollLast();
+        return (T) result.poll();
     }
 
     public <T> T lpop(String key) {
@@ -43,8 +43,9 @@ public class PlatformListCommandImpl extends PlatformKeyCommand implements Platf
         return (T) result.pollFirst();
     }
 
-    public Long rpush(String key, Object... o) {
-        return null;
+    public boolean rpush(String key, Object o) {
+        RBlockingDeque result = getRedissonClient().getBlockingDeque(key);
+        return result.offerLast(o);
     }
 
 }
