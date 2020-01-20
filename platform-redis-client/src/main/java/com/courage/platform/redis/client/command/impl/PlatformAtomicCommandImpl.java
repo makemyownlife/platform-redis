@@ -75,16 +75,43 @@ public class PlatformAtomicCommandImpl extends PlatformKeyCommand implements Pla
         });
     }
 
-    public Long incrByEx(String key, long incValue, int seconds) {
-        return null;
+    public Long incrByEx(final String key, final long incValue, final int seconds) {
+        return invokeCommand(new PlatformInvokeCommand<Long>(PlatformRedisCommandType.INCRBY_EX) {
+            @Override
+            public Long exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RBatch batch = getRedissonClient().createBatch();
+                RFuture<Long> rFuture = batch.getAtomicLong(key).addAndGetAsync(incValue);
+                batch.getBucket(key).expireAsync(seconds, TimeUnit.SECONDS);
+                batch.execute();
+                return rFuture.get();
+            }
+        });
     }
 
-    public Long decrEx(String key, int seconds) {
-        return null;
+    public Long decrEx(final String key, final int seconds) {
+        return invokeCommand(new PlatformInvokeCommand<Long>(PlatformRedisCommandType.DECR_EX) {
+            @Override
+            public Long exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RBatch batch = getRedissonClient().createBatch();
+                RFuture<Long> rFuture = batch.getAtomicLong(key).decrementAndGetAsync();
+                batch.getBucket(key).expireAsync(seconds, TimeUnit.SECONDS);
+                batch.execute();
+                return rFuture.get();
+            }
+        });
     }
 
-    public Long decrByEx(String key, long incValue, int seconds) {
-        return null;
+    public Long decrByEx(final String key, final long incValue, final int seconds) {
+        return invokeCommand(new PlatformInvokeCommand<Long>(PlatformRedisCommandType.DECRBY_EX) {
+            @Override
+            public Long exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RBatch batch = getRedissonClient().createBatch();
+                RFuture<Long> rFuture = batch.getAtomicLong(key).addAndGetAsync(-1 * incValue);
+                batch.getBucket(key).expireAsync(seconds, TimeUnit.SECONDS);
+                batch.execute();
+                return rFuture.get();
+            }
+        });
     }
 
 }
