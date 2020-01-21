@@ -4,6 +4,7 @@ import com.courage.platform.redis.client.PlatformRedisClient;
 import org.redisson.config.Config;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhangyong on 2020/1/18.
@@ -23,12 +24,23 @@ public class PlatformRedisClientUnitTest {
         platformRedisClient.getPlatformStringCommand().set("my", "4");
         Long s1 = platformRedisClient.getPlatformAtomicCommand().decrBy("my", 2);
 
-        Long s2 = platformRedisClient.getPlatformAtomicCommand().incrEx("my", 1);
+        Long s2 = platformRedisClient.getPlatformAtomicCommand().incrEx("my", 100);
 
         System.out.println(s1);
         System.out.println(s2);
 
-        platformRedisClient.getPlatformListCommand().lpush("list", new ArrayList<String>());
+        List mylist = new ArrayList();
+        mylist.add("mytime");
+
+        platformRedisClient.getPlatformListCommand().lpush("list", mylist);
+
+        platformRedisClient.getPlatformListCommand().lpush("list", new Config());
+
+            Object item = platformRedisClient.getPlatformListCommand().lpop("list");
+             System.out.println(item);
+
+        Object item1 = platformRedisClient.getPlatformListCommand().lpop("list");
+        System.out.println(item1);
     }
 
 }

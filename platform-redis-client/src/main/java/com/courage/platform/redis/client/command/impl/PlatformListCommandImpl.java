@@ -25,6 +25,7 @@ public class PlatformListCommandImpl extends PlatformKeyCommand implements Platf
                 return Boolean.valueOf(result.add(o));
             }
         });
+
     }
 
     public List lrange(final String key, final int startNum, final int endNum) {
