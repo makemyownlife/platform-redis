@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PlatformListCommandImpl extends PlatformKeyCommand implements PlatformListCommand {
 
-    private static JsonJacksonCodec listCodec = new JsonJacksonCodec();
+    private static JsonJacksonCodec listCodec = JsonJacksonCodec.INSTANCE;
 
     public PlatformListCommandImpl(RedissonClient redissonClient) {
         super(redissonClient);
@@ -25,7 +25,6 @@ public class PlatformListCommandImpl extends PlatformKeyCommand implements Platf
                 return Boolean.valueOf(result.add(o));
             }
         });
-
     }
 
     public List lrange(final String key, final int startNum, final int endNum) {
