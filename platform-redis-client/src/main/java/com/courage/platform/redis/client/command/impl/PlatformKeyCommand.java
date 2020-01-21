@@ -51,7 +51,7 @@ public class PlatformKeyCommand implements PlatformRedisCommand {
     }
 
     protected <T> T invokeCommand(PlatformInvokeCommand<T> callable) {
-        PlatformRedisCommandType redisCommandType = callable.getType();
+        PlatformRedisCommandType redisCommandType = callable.getCommandType();
         try {
             RedissonClient redissonClient = this.getRedissonClient();
             T obj = callable.exe(redissonClient);

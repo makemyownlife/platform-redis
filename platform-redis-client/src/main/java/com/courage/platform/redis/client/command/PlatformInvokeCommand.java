@@ -11,16 +11,16 @@ import java.util.concurrent.ExecutionException;
  */
 public abstract class PlatformInvokeCommand<T> {
 
-    private final PlatformRedisCommandType type;
+    private final PlatformRedisCommandType commandType;
 
     public abstract T exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException;
 
-    protected PlatformInvokeCommand(PlatformRedisCommandType type) {
-        this.type = type;
+    protected PlatformInvokeCommand(PlatformRedisCommandType commandType) {
+        this.commandType = commandType;
     }
 
-    public PlatformRedisCommandType getType() {
-        return type;
+    public PlatformRedisCommandType getCommandType() {
+        return commandType;
     }
 
 }
