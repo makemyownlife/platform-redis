@@ -5,7 +5,7 @@ import java.util.Set;
 
 public interface PlatformZSetCommand extends PlatformKeyCommand {
 
-    Long zadd(final String key, final Map<String, Double> scoreMembers);
+    Integer zadd(final String key, final Map<Object, Double> scoreMembers);
 
     Long zaddAndEx(final String key, final Map<String, Double> scoreMembers, int aliveSecond);
 

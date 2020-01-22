@@ -1,11 +1,15 @@
 package com.courage.platform.redis.client.command.impl;
 
+import com.courage.platform.redis.client.command.PlatformInvokeCommand;
 import com.courage.platform.redis.client.command.PlatformZSetCommand;
+import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
+import org.redisson.api.RFuture;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements PlatformZSetCommand {
 
@@ -16,8 +20,14 @@ public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements P
     }
 
     @Override
-    public Long zadd(String key, Map<String, Double> scoreMembers) {
-        return null;
+    public Integer zadd(final String key, final Map<Object, Double> scoreMembers) {
+        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZADD) {
+            @Override
+            public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RFuture<Integer> future = getRedissonClient().getScoredSortedSet(key, codec).addAllAsync(scoreMembers);
+                return future.get();
+            }
+        });
     }
 
     @Override
