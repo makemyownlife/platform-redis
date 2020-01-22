@@ -26,6 +26,9 @@ public class PlatformRedisTypeConfiguration {
         public Config singleServerConfig(PlatformSingleServerConfig platformSingleServerConfig) {
             Config config = new Config();
             config.useSingleServer().setAddress(platformSingleServerConfig.getAddress());
+            if (platformSingleServerConfig.getPassword() != null) {
+                config.useSingleServer().setPassword(platformSingleServerConfig.getPassword());
+            }
             return config;
         }
 

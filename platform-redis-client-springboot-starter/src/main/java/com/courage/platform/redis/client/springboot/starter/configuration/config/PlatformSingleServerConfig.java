@@ -13,6 +13,11 @@ public class PlatformSingleServerConfig {
      */
     private String address;
 
+    /*
+     Redis 密码
+     */
+    private String password;
+
     /**
      * Minimum idle subscription connection amount
      */
@@ -97,6 +102,14 @@ public class PlatformSingleServerConfig {
 
     public void setDnsMonitoringInterval(long dnsMonitoringInterval) {
         this.dnsMonitoringInterval = dnsMonitoringInterval;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
