@@ -21,7 +21,21 @@ public class PlatformRedisTypeConfiguration {
 
         @Bean
         public Config singleServerConfig() {
-            return null;
+            Config config = new Config();
+            return config;
+        }
+
+    }
+
+    @Configuration
+    @ConditionalOnMissingBean(Config.class)
+    @ConditionalOnProperty(name = "platform.redis.type", havingValue = "MASTER_SLAVE")
+    static class MasterSlaveServerConfig {
+
+        @Bean
+        public Config masterSlaveServerConfig() {
+            Config config = new Config();
+            return config;
         }
 
     }

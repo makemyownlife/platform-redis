@@ -1,7 +1,18 @@
 package com.courage.platform.redis.client.demo;
 
-/**
- * Created by zhangyong on 2020/1/19.
- */
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+@SpringBootApplication(scanBasePackages = "com.courage.platform")
+@ServletComponentScan
+@EnableScheduling
 public class MainApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(MainApplication.class, args);
+    }
+
 }
