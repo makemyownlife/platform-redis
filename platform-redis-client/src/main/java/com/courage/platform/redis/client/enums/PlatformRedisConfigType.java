@@ -5,6 +5,6 @@ package com.courage.platform.redis.client.enums;
  */
 public enum PlatformRedisConfigType {
 
-    SINGLE, MASTER_SLAVE, REDIS_CLUSTER
+    SINGLE, REDIS_CLUSTER
 
 }
