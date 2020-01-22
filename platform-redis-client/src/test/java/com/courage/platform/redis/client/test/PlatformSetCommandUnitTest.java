@@ -12,7 +12,12 @@ public class PlatformSetCommandUnitTest {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
         PlatformRedisClient platformRedisClient = new PlatformRedisClient(config);
-        platformRedisClient.getPlatformSetCommand().addAndEx("myset", 10, "zhangyong");
+        platformRedisClient.getPlatformSetCommand().addAndEx("myset", 109, "zhangyong");
+
+        platformRedisClient.getPlatformSetCommand().addAndEx("myset", 100, "li林");
+
+        platformRedisClient.getPlatformSetCommand().removes("myset", "zhangyong");
+
     }
 
 }
