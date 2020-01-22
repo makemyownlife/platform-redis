@@ -33,8 +33,8 @@ public class PlatformRedisTypeConfiguration {
 
     @Configuration
     @ConditionalOnMissingBean(Config.class)
-    @ConditionalOnProperty(name = "platform.redis.type", havingValue = "MASTER_SLAVE")
-    static class MasterSlaveServerConfig {
+    @ConditionalOnProperty(name = "platform.redis.type", havingValue = "CLUSTER")
+    static class StaticBuildClusterServer {
 
         @Bean
         public Config masterSlaveServerConfig() {
