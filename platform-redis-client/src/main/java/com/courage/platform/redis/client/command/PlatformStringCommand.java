@@ -3,7 +3,7 @@ package com.courage.platform.redis.client.command;
 /**
  * Created by zhangyong on 2020/1/19.
  */
-public interface PlatformStringCommand extends PlatformRedisCommand {
+public interface PlatformStringCommand extends PlatformKeyCommand {
 
     String get(String key);
 

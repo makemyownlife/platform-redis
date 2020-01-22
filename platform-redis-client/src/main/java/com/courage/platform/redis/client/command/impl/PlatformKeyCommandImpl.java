@@ -1,18 +1,17 @@
 package com.courage.platform.redis.client.command.impl;
 
 import com.courage.platform.redis.client.command.PlatformInvokeCommand;
-import com.courage.platform.redis.client.command.PlatformRedisCommand;
 import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.TimeUnit;
 
-public class PlatformKeyCommand implements PlatformRedisCommand {
+public class PlatformKeyCommandImpl implements com.courage.platform.redis.client.command.PlatformKeyCommand {
 
     private RedissonClient redissonClient;
 
-    public PlatformKeyCommand(RedissonClient redissonClient) {
+    public PlatformKeyCommandImpl(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 

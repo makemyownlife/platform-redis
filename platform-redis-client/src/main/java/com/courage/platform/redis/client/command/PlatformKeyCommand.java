@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.command;
 
-public interface PlatformRedisCommand {
+public interface PlatformKeyCommand {
 
     boolean del(String key);
 

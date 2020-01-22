@@ -3,7 +3,7 @@ package com.courage.platform.redis.client.command;
 import java.util.Map;
 import java.util.Set;
 
-public interface PlatformZSetCommand extends PlatformRedisCommand {
+public interface PlatformZSetCommand extends PlatformKeyCommand {
 
     Long zadd(final String key, final Map<String, Double> scoreMembers);
 

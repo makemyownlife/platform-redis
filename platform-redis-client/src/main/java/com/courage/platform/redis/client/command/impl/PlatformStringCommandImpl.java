@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * string command 实现
  * Created by zhangyong on 2020/1/19.
  */
-public class PlatformStringCommandImpl extends PlatformKeyCommand implements PlatformStringCommand {
+public class PlatformStringCommandImpl extends PlatformKeyCommandImpl implements PlatformStringCommand {
 
     public PlatformStringCommandImpl(RedissonClient redissonClient) {
         super(redissonClient);

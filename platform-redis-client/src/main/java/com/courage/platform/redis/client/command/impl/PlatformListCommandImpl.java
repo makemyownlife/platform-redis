@@ -10,7 +10,7 @@ import org.redisson.codec.JsonJacksonCodec;
 
 import java.util.List;
 
-public class PlatformListCommandImpl extends PlatformKeyCommand implements PlatformListCommand {
+public class PlatformListCommandImpl extends PlatformKeyCommandImpl implements PlatformListCommand {
 
     private static JsonJacksonCodec listCodec = JsonJacksonCodec.INSTANCE;
 

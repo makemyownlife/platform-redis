@@ -2,7 +2,7 @@ package com.courage.platform.redis.client.command;
 
 import java.util.Set;
 
-public interface PlatformSetCommand extends PlatformRedisCommand {
+public interface PlatformSetCommand extends PlatformKeyCommand {
 
     Boolean addAndEx(final String key, int second, final Object... value);
 

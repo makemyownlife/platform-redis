@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class PlatformAtomicCommandImpl extends PlatformKeyCommand implements PlatformAtomicCommand {
+public class PlatformAtomicCommandImpl extends PlatformKeyCommandImpl implements PlatformAtomicCommand {
 
     private static final Logger logger = LoggerFactory.getLogger(PlatformAtomicCommandImpl.class);
 

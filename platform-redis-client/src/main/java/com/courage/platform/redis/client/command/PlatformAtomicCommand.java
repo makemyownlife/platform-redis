@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.command;
 
-public interface PlatformAtomicCommand extends PlatformRedisCommand {
+public interface PlatformAtomicCommand extends PlatformKeyCommand {
 
     Long incr(String key);
 

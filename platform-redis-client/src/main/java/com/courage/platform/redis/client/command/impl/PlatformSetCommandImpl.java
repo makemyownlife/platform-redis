@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class PlatformSetCommandImpl extends PlatformKeyCommand implements PlatformSetCommand {
+public class PlatformSetCommandImpl extends PlatformKeyCommandImpl implements PlatformSetCommand {
 
     private final static Logger logger = LoggerFactory.getLogger(PlatformSetCommandImpl.class);
 
