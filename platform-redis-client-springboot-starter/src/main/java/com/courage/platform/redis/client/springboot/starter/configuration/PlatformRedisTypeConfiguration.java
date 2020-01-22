@@ -1,5 +1,6 @@
 package com.courage.platform.redis.client.springboot.starter.configuration;
 
+import com.courage.platform.redis.client.springboot.starter.configuration.config.PlatformClusterServerConfig;
 import com.courage.platform.redis.client.springboot.starter.configuration.config.PlatformSingleServerConfig;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -37,11 +38,15 @@ public class PlatformRedisTypeConfiguration {
     @Configuration
     @ConditionalOnMissingBean(Config.class)
     @ConditionalOnProperty(name = "platform.redis.type", havingValue = "CLUSTER")
+    @EnableConfigurationProperties(PlatformClusterServerConfig.class)
     static class StaticBuildClusterServer {
 
         @Bean
-        public Config clusterServerConfig() {
+        public Config clusterServerConfig(PlatformClusterServerConfig platformClusterServerConfig) {
             Config config = new Config();
+            for (String node : platformClusterServerConfig.getNodes()) {
+                config.useClusterServers().addNodeAddress(node);
+            }
             return config;
         }
 

@@ -2,4 +2,7 @@ platform:
   redis:
     type: CLUSTER
     clusterserver:
-      address: redis://127.0.0.1:6379
+      nodes:
+          - redis://127.0.0.1:6379
+          - redis://127.0.0.1:6379
+          - redis://127.0.0.1:6379
