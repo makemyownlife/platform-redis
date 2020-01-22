@@ -2,4 +2,4 @@ platform:
   redis:
     type: SINGLE
     singleserver:
-      address: redis://127.0.0.1:6379
+      address: redis://192.168.43.60:6379

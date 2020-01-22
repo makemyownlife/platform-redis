@@ -55,16 +55,13 @@ public class PlatformSingleServerConfig {
         return address;
     }
 
-
     public long getDnsMonitoringInterval() {
         return dnsMonitoringInterval;
     }
 
-
     public int getSubscriptionConnectionMinimumIdleSize() {
         return subscriptionConnectionMinimumIdleSize;
     }
-
 
     public int getConnectionMinimumIdleSize() {
         return connectionMinimumIdleSize;
@@ -74,5 +71,32 @@ public class PlatformSingleServerConfig {
         return database;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setSubscriptionConnectionMinimumIdleSize(int subscriptionConnectionMinimumIdleSize) {
+        this.subscriptionConnectionMinimumIdleSize = subscriptionConnectionMinimumIdleSize;
+    }
+
+    public void setSubscriptionConnectionPoolSize(int subscriptionConnectionPoolSize) {
+        this.subscriptionConnectionPoolSize = subscriptionConnectionPoolSize;
+    }
+
+    public void setConnectionMinimumIdleSize(int connectionMinimumIdleSize) {
+        this.connectionMinimumIdleSize = connectionMinimumIdleSize;
+    }
+
+    public void setConnectionPoolSize(int connectionPoolSize) {
+        this.connectionPoolSize = connectionPoolSize;
+    }
+
+    public void setDatabase(int database) {
+        this.database = database;
+    }
+
+    public void setDnsMonitoringInterval(long dnsMonitoringInterval) {
+        this.dnsMonitoringInterval = dnsMonitoringInterval;
+    }
 
 }
