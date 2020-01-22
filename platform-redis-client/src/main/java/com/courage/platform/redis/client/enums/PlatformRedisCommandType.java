@@ -20,7 +20,7 @@ public enum PlatformRedisCommandType {
 
 
     //set命令
-    SADD, SCARD, SMOVE, SPOP, SISMEMBER, SMEMBERS,
+    SADD, SCARD, SMOVE, SISMEMBER, SMEMBERS,
 
 
     //zset命令
