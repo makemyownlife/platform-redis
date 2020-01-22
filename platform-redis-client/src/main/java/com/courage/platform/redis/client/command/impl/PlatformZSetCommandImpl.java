@@ -31,7 +31,7 @@ public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements P
     }
 
     @Override
-    public Long zaddAndEx(String key, Map<String, Double> scoreMembers, int aliveSecond) {
+    public Long zaddAndEx(final String key, final Map<Object, Double> scoreMembers, final int aliveSecond) {
         return null;
     }
 
