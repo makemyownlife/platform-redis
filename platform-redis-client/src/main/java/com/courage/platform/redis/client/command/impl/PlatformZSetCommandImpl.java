@@ -2,11 +2,14 @@ package com.courage.platform.redis.client.command.impl;
 
 import com.courage.platform.redis.client.command.PlatformZSetCommand;
 import org.redisson.api.RedissonClient;
+import org.redisson.codec.JsonJacksonCodec;
 
 import java.util.Map;
 import java.util.Set;
 
 public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements PlatformZSetCommand {
+
+    private static JsonJacksonCodec codec = JsonJacksonCodec.INSTANCE;
 
     public PlatformZSetCommandImpl(RedissonClient redissonClient) {
         super(redissonClient);
