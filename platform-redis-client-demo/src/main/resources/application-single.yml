@@ -1,5 +1,5 @@
 platform:
   redis:
     type: SINGLE
-    singleServer:
+    singleserver:
       address: redis://127.0.0.1:6379

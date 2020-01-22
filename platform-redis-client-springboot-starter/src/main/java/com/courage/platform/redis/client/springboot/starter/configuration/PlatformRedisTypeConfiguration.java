@@ -1,9 +1,11 @@
 package com.courage.platform.redis.client.springboot.starter.configuration;
 
+import com.courage.platform.redis.client.springboot.starter.configuration.config.PlatformSingleServerConfig;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,11 +19,13 @@ public class PlatformRedisTypeConfiguration {
     @Configuration
     @ConditionalOnMissingBean(Config.class)
     @ConditionalOnProperty(name = "platform.redis.type", havingValue = "SINGLE")
-    static class SingleServerConfig {
+    @EnableConfigurationProperties(PlatformSingleServerConfig.class)
+    static class StaticBuildSingleServer {
 
         @Bean
-        public Config singleServerConfig() {
+        public Config singleServerConfig(PlatformSingleServerConfig platformSingleServerConfig) {
             Config config = new Config();
+            config.useSingleServer().setAddress(platformSingleServerConfig.getAddress());
             return config;
         }
 
