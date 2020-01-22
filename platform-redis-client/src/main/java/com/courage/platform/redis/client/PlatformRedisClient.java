@@ -2,9 +2,11 @@ package com.courage.platform.redis.client;
 
 import com.courage.platform.redis.client.command.PlatformAtomicCommand;
 import com.courage.platform.redis.client.command.PlatformListCommand;
+import com.courage.platform.redis.client.command.PlatformSetCommand;
 import com.courage.platform.redis.client.command.PlatformStringCommand;
 import com.courage.platform.redis.client.command.impl.PlatformAtomicCommandImpl;
 import com.courage.platform.redis.client.command.impl.PlatformListCommandImpl;
+import com.courage.platform.redis.client.command.impl.PlatformSetCommandImpl;
 import com.courage.platform.redis.client.command.impl.PlatformStringCommandImpl;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -29,6 +31,8 @@ public class PlatformRedisClient {
 
     private PlatformListCommand platformListCommand;
 
+    private PlatformSetCommand platformSetCommand;
+
     public PlatformRedisClient(Config config) {
         //默认string编解码
         config.setCodec(new StringCodec());
@@ -40,6 +44,7 @@ public class PlatformRedisClient {
         this.platformStringCommand = new PlatformStringCommandImpl(this.redissonClient);
         this.platformAtomicCommand = new PlatformAtomicCommandImpl(this.redissonClient);
         this.platformListCommand = new PlatformListCommandImpl(this.redissonClient);
+        this.platformSetCommand = new PlatformSetCommandImpl(this.redissonClient);
     }
 
     public PlatformStringCommand getPlatformStringCommand() {
@@ -52,6 +57,10 @@ public class PlatformRedisClient {
 
     public PlatformListCommand getPlatformListCommand() {
         return platformListCommand;
+    }
+
+    public PlatformSetCommand getPlatformSetCommand() {
+        return platformSetCommand;
     }
 
     public void shutdown() {
