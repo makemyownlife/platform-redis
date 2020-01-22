@@ -37,7 +37,7 @@ public class PlatformRedisTypeConfiguration {
     static class StaticBuildClusterServer {
 
         @Bean
-        public Config masterSlaveServerConfig() {
+        public Config clusterServerConfig() {
             Config config = new Config();
             return config;
         }

@@ -1,5 +1,5 @@
 platform:
   redis:
-    type: MASTER_SLAVE
-    singleServer:
+    type: CLUSTER
+    clusterserver:
       address: redis://127.0.0.1:6379
