@@ -1,5 +1,6 @@
 package com.courage.platform.redis.client.command;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,11 +10,11 @@ public interface PlatformZSetCommand extends PlatformKeyCommand {
 
     Integer zaddAndEx(final String key, final Map<Object, Double> scoreMembers, int aliveSecond);
 
-    Long zadd(final String key, final double score, final String member);
+    Integer zadd(final String key, final double score, final Object member);
 
-    Long zaddAndEx(final String key, final double score, final String member, int aliveSecond);
+    Integer zaddAndEx(final String key, final double score, final String member, int aliveSecond);
 
-    Set<String> zrange(final String key, final long start, final long end);
+    Collection zrange(final String key, final int start, final int end);
 
     Set<String> zrangeByScore(final String key, final double min, final double max);
 
