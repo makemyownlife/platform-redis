@@ -88,8 +88,15 @@ public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements P
     }
 
     @Override
-    public Set<String> zrangeByScore(String key, double min, double max) {
-        return null;
+    public Collection zrangeByScore(final String key, final double min, final double max) {
+        return invokeCommand(new PlatformInvokeCommand<Collection>(PlatformRedisCommandType.ZRANGE) {
+            @Override
+            public Collection exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, codec);
+                RFuture<Collection> rFuture = rScoredSortedSetAsync.valueRangeAsync(min, true, max, true);
+                return rFuture.get();
+            }
+        });
     }
 
     @Override
