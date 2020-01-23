@@ -2,7 +2,6 @@ package com.courage.platform.redis.client.command;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 public interface PlatformZSetCommand extends PlatformKeyCommand {
 
@@ -18,18 +17,21 @@ public interface PlatformZSetCommand extends PlatformKeyCommand {
 
     Collection zrangeByScore(final String key, final double min, final double max);
 
-    Boolean zrem(final String key, final String... members);
+    Boolean zrem(final String key, final Object... members);
 
-    Long zremrangeByScore(final String key, double min, double max);
+    Integer zremrangeByScore(final String key, double min, double max);
 
-    Double zincrbyAndEx(final String key, final double score, final String member, int aliveSecond);
+    /*
+    有序集合中对指定成员的分数加上增量 increment
+     */
+    Double zincrbyAndEx(final String key, final double score, final Object member, int aliveSecond);
 
-    Double zincrby(final String key, final double score, final String member);
+    Double zincrby(final String key, final double score, final Object member);
 
-    Long zrank(final String key, final String member);
+    Integer zrank(final String key, final Object member);
 
-    Long zrevrank(final String key, final String member);
+    Integer zrevrank(final String key, final Object member);
 
-    Set<String> zrevrange(final String key, final long start, final long end);
+    Collection zrevrange(final String key, final int start, final int end);
 
 }

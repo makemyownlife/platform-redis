@@ -3,16 +3,12 @@ package com.courage.platform.redis.client.command.impl;
 import com.courage.platform.redis.client.command.PlatformInvokeCommand;
 import com.courage.platform.redis.client.command.PlatformZSetCommand;
 import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
-import org.redisson.api.RBatch;
-import org.redisson.api.RFuture;
-import org.redisson.api.RScoredSortedSetAsync;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.redisson.codec.JsonJacksonCodec;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -101,7 +97,7 @@ public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements P
     }
 
     @Override
-    public Boolean zrem(final String key, final String... members) {
+    public Boolean zrem(final String key, final Object... members) {
         return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.ZREM) {
             @Override
             public Boolean exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
@@ -113,33 +109,74 @@ public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements P
     }
 
     @Override
-    public Long zremrangeByScore(String key, double min, double max) {
-        return null;
+    public Integer zremrangeByScore(final String key, final double min, final double max) {
+        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZREMRANGEBYSCORE) {
+            @Override
+            public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, codec);
+                RFuture<Integer> rFuture = rScoredSortedSetAsync.removeRangeByScoreAsync(min, true, max, true);
+                return rFuture.get();
+            }
+        });
     }
 
     @Override
-    public Double zincrbyAndEx(String key, double score, String member, int aliveSecond) {
-        return null;
+    public Double zincrbyAndEx(final String key, final double score, final Object member, final int aliveSecond) {
+        return invokeCommand(new PlatformInvokeCommand<Double>(PlatformRedisCommandType.ZINCRBY) {
+            @Override
+            public Double exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RBatch rBatch = getRedissonClient().createBatch();
+                RScoredSortedSetAsync rScoredSortedSetAsync = rBatch.getScoredSortedSet(key, codec);
+                RFuture<Double> rFuture = rScoredSortedSetAsync.addScoreAsync(member, score);
+                rScoredSortedSetAsync.expireAsync(aliveSecond, TimeUnit.SECONDS);
+                return rFuture.get();
+            }
+        });
     }
 
     @Override
-    public Double zincrby(String key, double score, String member) {
-        return null;
+    public Double zincrby(final String key, final double score, final Object member) {
+        return invokeCommand(new PlatformInvokeCommand<Double>(PlatformRedisCommandType.ZINCRBY) {
+            @Override
+            public Double exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RScoredSortedSet rScoredSortedSet = getRedissonClient().getScoredSortedSet(key, codec);
+                RFuture<Double> rFuture = rScoredSortedSet.addScoreAsync(member, score);
+                return rFuture.get();
+            }
+        });
     }
 
     @Override
-    public Long zrank(String key, String member) {
-        return null;
+    public Integer zrank(final String key, final Object member) {
+        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZRANK) {
+            @Override
+            public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RScoredSortedSet rScoredSortedSet = getRedissonClient().getScoredSortedSet(key, codec);
+                return rScoredSortedSet.rank(member);
+            }
+        });
     }
 
     @Override
-    public Long zrevrank(String key, String member) {
-        return null;
+    public Integer zrevrank(final String key, final Object member) {
+        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZREVRANK) {
+            @Override
+            public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RScoredSortedSet rScoredSortedSet = getRedissonClient().getScoredSortedSet(key, codec);
+                return rScoredSortedSet.revRank(member);
+            }
+        });
     }
 
     @Override
-    public Set<String> zrevrange(String key, long start, long end) {
-        return null;
+    public Collection zrevrange(final String key, final int start, final int end) {
+        return invokeCommand(new PlatformInvokeCommand<Collection>(PlatformRedisCommandType.ZREVRANK) {
+            @Override
+            public Collection exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RScoredSortedSet rScoredSortedSet = getRedissonClient().getScoredSortedSet(key, codec);
+                return rScoredSortedSet.valueRangeReversed(start, end);
+            }
+        });
     }
 
 
