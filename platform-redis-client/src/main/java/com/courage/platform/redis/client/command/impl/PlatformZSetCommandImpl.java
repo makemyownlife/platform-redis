@@ -67,6 +67,7 @@ public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements P
                 RScoredSortedSetAsync rScoredSortedSetAsync = rBatch.getScoredSortedSet(key, codec);
                 RFuture<Integer> rFuture = rScoredSortedSetAsync.addAsync(score, member);
                 rScoredSortedSetAsync.expireAsync(aliveSecond, TimeUnit.SECONDS);
+                rBatch.execute();
                 return rFuture.get();
             }
         });
