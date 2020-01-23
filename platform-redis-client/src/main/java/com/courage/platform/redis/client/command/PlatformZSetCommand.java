@@ -18,7 +18,7 @@ public interface PlatformZSetCommand extends PlatformKeyCommand {
 
     Collection zrangeByScore(final String key, final double min, final double max);
 
-    Long zrem(final String key, final String... members);
+    Boolean zrem(final String key, final String... members);
 
     Long zremrangeByScore(final String key, double min, double max);
 

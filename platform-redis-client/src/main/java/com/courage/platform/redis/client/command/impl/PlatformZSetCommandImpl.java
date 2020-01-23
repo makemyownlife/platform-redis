@@ -9,6 +9,7 @@ import org.redisson.api.RScoredSortedSetAsync;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -100,8 +101,15 @@ public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements P
     }
 
     @Override
-    public Long zrem(String key, String... members) {
-        return null;
+    public Boolean zrem(final String key, final String... members) {
+        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.ZREM) {
+            @Override
+            public Boolean exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, codec);
+                RFuture<Boolean> rFuture = rScoredSortedSetAsync.removeAllAsync(Arrays.asList(members));
+                return rFuture.get();
+            }
+        });
     }
 
     @Override
