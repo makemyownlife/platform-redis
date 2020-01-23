@@ -10,7 +10,7 @@ public enum PlatformRedisCommandType {
     //str 命令
     INCR, INCRBY, DECR, DECRBY,
     INCR_EX, INCRBY_EX, DECR_EX, DECRBY_EX,
-    GET, SET, SET_EX, SET_NX, SET_NX_EX, GET_SET,
+    GET, SET, SET_EX, SET_NX, GET_SET,
 
     //list 命令
     LRANGE, LPUSH, LLEN, LTRIM, RPOP, LPOP, RPUSH, BLPOP, BRPOP,
