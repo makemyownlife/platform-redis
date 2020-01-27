@@ -29,6 +29,8 @@ public class PlatformRedisClient {
 
     private PlatformZSetCommand platformZSetCommand;
 
+    private PlatformHashCommand platformHashCommand;
+
     public PlatformRedisClient(Config config) {
         //默认string编解码
         config.setCodec(new StringCodec());
@@ -42,6 +44,7 @@ public class PlatformRedisClient {
         this.platformListCommand = new PlatformListCommandImpl(this.redissonClient);
         this.platformSetCommand = new PlatformSetCommandImpl(this.redissonClient);
         this.platformZSetCommand = new PlatformZSetCommandImpl(this.redissonClient);
+        this.platformHashCommand = new PlatformHashCommandImpl(this.redissonClient);
     }
 
     public PlatformStringCommand getPlatformStringCommand() {
@@ -62,6 +65,10 @@ public class PlatformRedisClient {
 
     public PlatformZSetCommand getPlatformZSetCommand() {
         return platformZSetCommand;
+    }
+
+    public PlatformHashCommand getPlatformHashCommand() {
+        return platformHashCommand;
     }
 
     public void shutdown() {
