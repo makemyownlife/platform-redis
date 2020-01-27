@@ -25,7 +25,8 @@ public class PlatformScriptCommandImpl extends PlatformKeyCommandImpl implements
     }
 
     public String scriptLoad(String luaScript) {
-        return null;
+        RScript rScript = getRedissonClient().getScript(codec);
+        return rScript.scriptLoad(luaScript);
     }
 
 }
