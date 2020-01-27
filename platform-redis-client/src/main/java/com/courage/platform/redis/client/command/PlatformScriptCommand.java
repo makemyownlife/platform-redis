@@ -6,5 +6,6 @@ package com.courage.platform.redis.client.command;
  */
 public interface PlatformScriptCommand extends PlatformKeyCommand {
 
-
+    String scriptLoad(String luaScript);
+    
 }
