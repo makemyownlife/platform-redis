@@ -24,6 +24,7 @@ public class PlatformScriptCommandImpl extends PlatformKeyCommandImpl implements
         return rScript.evalSha(RScript.Mode.READ_WRITE, shaDigest, RScript.ReturnType.VALUE, keys, values);
     }
 
+    //加载script 那么如何remove呢？
     public String scriptLoad(String luaScript) {
         RScript rScript = getRedissonClient().getScript(codec);
         return rScript.scriptLoad(luaScript);
