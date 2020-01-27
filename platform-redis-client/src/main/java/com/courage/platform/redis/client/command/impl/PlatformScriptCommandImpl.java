@@ -21,7 +21,7 @@ public class PlatformScriptCommandImpl extends PlatformKeyCommandImpl implements
 
     public Object evalSha(String key, String shaDigest, List<Object> keys, Object... values) {
         RScript rScript = getRedissonClient().getScript(codec);
-        return rScript.evalSha(key, RScript.Mode.READ_WRITE, shaDigest, null, null, keys, values);
+        return rScript.evalSha(RScript.Mode.READ_WRITE, shaDigest, RScript.ReturnType.VALUE, keys, values);
     }
 
     public String scriptLoad(String luaScript) {
