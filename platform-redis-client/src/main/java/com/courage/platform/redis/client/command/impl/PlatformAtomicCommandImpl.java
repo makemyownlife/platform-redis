@@ -94,7 +94,7 @@ public class PlatformAtomicCommandImpl extends PlatformKeyCommandImpl implements
             public Long exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RBatch batch = getRedissonClient().createBatch();
                 RFuture<Long> rFuture = batch.getAtomicLong(key).decrementAndGetAsync();
-                batch.getBucket(key).expireAsync(seconds, TimeUnit.SECONDS);
+                batch.getAtomicLong(key).expireAsync(seconds, TimeUnit.SECONDS);
                 batch.execute();
                 return rFuture.get();
             }
@@ -107,11 +107,11 @@ public class PlatformAtomicCommandImpl extends PlatformKeyCommandImpl implements
             public Long exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RBatch batch = getRedissonClient().createBatch();
                 RFuture<Long> rFuture = batch.getAtomicLong(key).addAndGetAsync(-1 * incValue);
-                batch.getBucket(key).expireAsync(seconds, TimeUnit.SECONDS);
+                batch.getAtomicLong(key).expireAsync(seconds, TimeUnit.SECONDS);
                 batch.execute();
                 return rFuture.get();
             }
         });
     }
-    
+
 }
