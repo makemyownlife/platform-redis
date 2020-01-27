@@ -6,7 +6,7 @@ import org.redisson.config.Config;
 /**
  * Created by zhangyong on 2020/1/18.
  */
-public class PlatformScripteCommandUnitTest {
+public class PlatformScriptCommandUnitTest {
 
     public static void main(String[] args) {
         Config config = new Config();
