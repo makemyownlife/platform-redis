@@ -5,6 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.redisson.config.Config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * hash 单元测试
  * Created by zhangyong on 2020/1/27.
@@ -22,9 +25,12 @@ public class PlatformHashCommandUnitTest {
 
     @Test
     public void setValue() {
-        Object my = this.platformRedisClient.getPlatformHashCommand().hset("myhash", "time", "李林");
+        Map<String, Object> mapping = new HashMap<String, Object>();
+        mapping.put("one", "张勇");
+        Object my = this.platformRedisClient.getPlatformHashCommand().hset("myhash", "time", mapping);
         System.out.println(my);
-        Object my1 = this.platformRedisClient.getPlatformHashCommand().hset("myhash", "time", "李林 &zhangyong");
+        mapping.put("two", "高慧");
+        Object my1 = this.platformRedisClient.getPlatformHashCommand().hset("myhash", "time", mapping);
         System.out.println(my1);
     }
 
