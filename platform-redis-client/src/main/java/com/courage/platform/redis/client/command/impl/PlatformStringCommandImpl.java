@@ -6,6 +6,7 @@ import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -72,5 +73,15 @@ public class PlatformStringCommandImpl extends PlatformKeyCommandImpl implements
             }
         });
     }
+
+    public Map<String, Object> mget(final String... keys) {
+        return invokeCommand(new PlatformInvokeCommand<Map<String, Object>>(PlatformRedisCommandType.MGET) {
+            @Override
+            public Map<String, Object> exe(RedissonClient redissonClient) {
+                return getRedissonClient().getBuckets().get(keys);
+            }
+        });
+    }
+
 
 }

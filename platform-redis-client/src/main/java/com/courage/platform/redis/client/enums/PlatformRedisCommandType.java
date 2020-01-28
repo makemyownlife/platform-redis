@@ -8,7 +8,7 @@ public enum PlatformRedisCommandType {
     EXPIRE,
 
     //str 命令
-    INCR, INCRBY, DECR, DECRBY,
+    INCR, INCRBY, DECR, DECRBY,MGET,
     INCR_EX, INCRBY_EX, DECR_EX, DECRBY_EX,
     GET, SET, SET_EX, SET_NX, GET_SET,
 

@@ -1,5 +1,7 @@
 package com.courage.platform.redis.client.command;
 
+import java.util.Map;
+
 /**
  * Created by zhangyong on 2020/1/19.
  */
@@ -14,5 +16,7 @@ public interface PlatformStringCommand extends PlatformKeyCommand {
     boolean setNx(String key, String value);
 
     boolean setNx(String key, String value, int aliveSecond);
+
+    Map<String, Object> mget(String... keys);
 
 }
