@@ -1,6 +1,7 @@
 package com.courage.platform.redis.client.demo.controller;
 
 import com.courage.platform.redis.client.PlatformRedisClient;
+import com.courage.platform.redis.client.command.PlatformStringCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class SimpleController {
 
     @Autowired
     private PlatformRedisClient platformRedisClient;
+
+    @Autowired
+    private PlatformStringCommand platformStringCommand;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
