@@ -19,9 +19,14 @@ public class PlatformScriptCommandImpl extends PlatformKeyCommandImpl implements
         super(redissonClient);
     }
 
-    public Object evalSha(String key, String shaDigest, List<Object> keys, Object... values) {
+    public Object evalSha(String shardingkey, String shaDigest, List<Object> keys, Object... values) {
         RScript rScript = getRedissonClient().getScript(codec);
-        return rScript.evalSha(RScript.Mode.READ_WRITE, shaDigest, RScript.ReturnType.VALUE, keys, values);
+        return rScript.evalSha(shardingkey, RScript.Mode.READ_WRITE, shaDigest, RScript.ReturnType.VALUE, keys, values);
+    }
+
+    public Object eval(String shardingkey, String luaScript, List<Object> keys, Object... values) {
+        RScript rScript = getRedissonClient().getScript(codec);
+        return rScript.eval(shardingkey, RScript.Mode.READ_WRITE, luaScript, RScript.ReturnType.VALUE, keys, values);
     }
 
     //加载script 那么如何remove呢？

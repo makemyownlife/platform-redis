@@ -14,6 +14,8 @@ public interface PlatformScriptCommand extends PlatformKeyCommand {
      */
     String scriptLoad(String luaScript);
 
-    Object evalSha(String key, String shaDigest, List<Object> keys, Object... values);
+    Object evalSha(String shardingkey, String shaDigest, List<Object> keys, Object... values);
+
+    Object eval(String shardingkey, String luaScript, List<Object> keys, Object... values);
 
 }
