@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by zhangyong on 2020/1/22.
  */
 @ConfigurationProperties(prefix = "platform.redis.singleserver")
-public class PlatformSingleServerConfig {
+public class PlatformSingleServerConfigBoot {
 
     /**
      * Redis server address

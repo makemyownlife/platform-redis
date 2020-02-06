@@ -1,7 +1,7 @@
 package com.courage.platform.redis.client.springboot.starter.configuration;
 
-import com.courage.platform.redis.client.springboot.starter.configuration.config.PlatformClusterServerConfig;
-import com.courage.platform.redis.client.springboot.starter.configuration.config.PlatformSingleServerConfig;
+import com.courage.platform.redis.client.springboot.starter.configuration.config.PlatformClusterServerConfigBoot;
+import com.courage.platform.redis.client.springboot.starter.configuration.config.PlatformSingleServerConfigBoot;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -20,15 +20,15 @@ public class PlatformRedisTypeConfiguration {
     @Configuration
     @ConditionalOnMissingBean(Config.class)
     @ConditionalOnProperty(name = "platform.redis.type", havingValue = "SINGLE")
-    @EnableConfigurationProperties(PlatformSingleServerConfig.class)
+    @EnableConfigurationProperties(PlatformSingleServerConfigBoot.class)
     static class StaticBuildSingleServer {
 
         @Bean
-        public Config singleServerConfig(PlatformSingleServerConfig platformSingleServerConfig) {
+        public Config singleServerConfig(PlatformSingleServerConfigBoot platformSingleServerConfigBoot) {
             Config config = new Config();
-            config.useSingleServer().setAddress(platformSingleServerConfig.getAddress());
-            if (platformSingleServerConfig.getPassword() != null) {
-                config.useSingleServer().setPassword(platformSingleServerConfig.getPassword());
+            config.useSingleServer().setAddress(platformSingleServerConfigBoot.getAddress());
+            if (platformSingleServerConfigBoot.getPassword() != null) {
+                config.useSingleServer().setPassword(platformSingleServerConfigBoot.getPassword());
             }
             return config;
         }
@@ -38,13 +38,13 @@ public class PlatformRedisTypeConfiguration {
     @Configuration
     @ConditionalOnMissingBean(Config.class)
     @ConditionalOnProperty(name = "platform.redis.type", havingValue = "CLUSTER")
-    @EnableConfigurationProperties(PlatformClusterServerConfig.class)
+    @EnableConfigurationProperties(PlatformClusterServerConfigBoot.class)
     static class StaticBuildClusterServer {
 
         @Bean
-        public Config clusterServerConfig(PlatformClusterServerConfig platformClusterServerConfig) {
+        public Config clusterServerConfig(PlatformClusterServerConfigBoot platformClusterServerConfigBoot) {
             Config config = new Config();
-            for (String node : platformClusterServerConfig.getNodes()) {
+            for (String node : platformClusterServerConfigBoot.getNodes()) {
                 config.useClusterServers().addNodeAddress(node);
             }
             return config;

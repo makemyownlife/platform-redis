@@ -2,6 +2,9 @@ package com.courage.platform.redis.client;
 
 import com.courage.platform.redis.client.command.*;
 import com.courage.platform.redis.client.command.impl.*;
+import com.courage.platform.redis.client.config.PlatformClusterServerConfig;
+import com.courage.platform.redis.client.config.PlatformSingleServerConfig;
+import com.courage.platform.redis.client.utils.ConfigBuilder;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
@@ -33,7 +36,23 @@ public class PlatformRedisClient {
 
     private PlatformScriptCommand platformScriptCommand;
 
+    public PlatformRedisClient(PlatformSingleServerConfig platformSingleServerConfig) {
+        Config config = ConfigBuilder.buildBySingleServerConfig(platformSingleServerConfig);
+        //默认string编解码
+        config.setCodec(new StringCodec());
+        this.redissonClient = Redisson.create(config);
+        this.createCommands();
+    }
+
     public PlatformRedisClient(Config config) {
+        //默认string编解码
+        config.setCodec(new StringCodec());
+        this.redissonClient = Redisson.create(config);
+        this.createCommands();
+    }
+
+    public PlatformRedisClient(PlatformClusterServerConfig platformClusterServerConfig) {
+        Config config = ConfigBuilder.buildByClusterServerConfig(platformClusterServerConfig);
         //默认string编解码
         config.setCodec(new StringCodec());
         this.redissonClient = Redisson.create(config);
