@@ -6,6 +6,6 @@ package com.courage.platform.redis.client.enums;
  */
 public enum PlatformRedisConfigType {
 
-    SINGLE, CLUSTER
+    SINGLE, CLUSTER ,SENTINEL
 
 }
