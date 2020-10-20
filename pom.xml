@@ -18,6 +18,8 @@
         <module>platform-redis-client-springboot-starter</module>
         <module>platform-redis-client</module>
         <module>platform-redis-client-demo</module>
+        <!-- id生成器 -->
+        <module>platform-redis-idgenerator</module>
     </modules>
 
 </project>
