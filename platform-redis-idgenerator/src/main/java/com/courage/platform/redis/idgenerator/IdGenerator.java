@@ -18,7 +18,7 @@ public class IdGenerator {
         this.platformRedisClient = platformRedisClient;
     }
 
-    public Long generateUniqueId(String namespace, String businessCode) {
+    public Long generateUniqueId(String businessCode) {
         PlatformAtomicCommand platformAtomicCommand = platformRedisClient.getPlatformAtomicCommand();
         return null;
     }
