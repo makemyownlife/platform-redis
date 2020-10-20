@@ -8,6 +8,11 @@ public class SnowFlakeIdGenerator {
     //最大机器id 1023 也就是 1111111111
     private final static int MAX_WORKER_ID = SHARDING_NUM - 1;
 
+    /**
+     * 开始时间截 (2019-08-06)
+     */
+    private static final long twepoch = 1565020800000L;
+
     //最大序号
     private final static int MAX_SEQ = 4095;
 
@@ -29,7 +34,7 @@ public class SnowFlakeIdGenerator {
         //时间戳
         long timestamp = System.currentTimeMillis();
         //机器编号
-        return (timestamp << TIMESTAMP_LEFTSHIFT) | (workerId << WORKERID_SHIFT) | seqId;
+        return ((timestamp - twepoch) << TIMESTAMP_LEFTSHIFT) | (workerId << WORKERID_SHIFT) | seqId;
     }
 
     public static long getUniqueId(long timestamp, int workerId, int seqId) {
@@ -39,8 +44,13 @@ public class SnowFlakeIdGenerator {
         if (seqId > MAX_SEQ || seqId < 0) {
             throw new IllegalArgumentException("seqId is not Illegal ");
         }
-        //机器编号
-        return (timestamp << TIMESTAMP_LEFTSHIFT) | (workerId << WORKERID_SHIFT) | seqId;
+        return ((timestamp - twepoch) << TIMESTAMP_LEFTSHIFT) | (workerId << WORKERID_SHIFT) | seqId;
+    }
+
+    public static void main(String[] args) {
+        Long id = SnowFlakeIdGenerator.getUniqueId(1023, 12);
+        String s = Long.toBinaryString(id);
+        System.out.println(s);
     }
 
 }
