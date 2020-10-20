@@ -13,5 +13,15 @@
 
     <artifactId>platform-redis-idgenerator</artifactId>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>com.courage</groupId>
+            <artifactId>platform-redis-client</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
 
 </project>

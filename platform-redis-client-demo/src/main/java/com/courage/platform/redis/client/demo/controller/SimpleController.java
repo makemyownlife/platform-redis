@@ -19,11 +19,21 @@ public class SimpleController {
     private PlatformRedisClient platformRedisClient;
 
     @Autowired
-    private PlatformStringCommand platformStringCommand;
+    private PlatformStringCommand sss;
+
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
     public String hellodanbiao() {
+        String mylife = platformRedisClient.getPlatformStringCommand().get("hello");
+        System.out.println(mylife);
+        platformRedisClient.getPlatformStringCommand().set("hello", "zhang勇");
+        return "hello-service";
+    }
+
+    @RequestMapping(value = "/generatorId", method = RequestMethod.GET)
+    @ResponseBody
+    public String generatorId() {
         String mylife = platformRedisClient.getPlatformStringCommand().get("hello");
         System.out.println(mylife);
         platformRedisClient.getPlatformStringCommand().set("hello", "zhang勇");
