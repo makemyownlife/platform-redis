@@ -6,6 +6,8 @@ import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class PlatformHashCommandImpl extends PlatformKeyCommandImpl implements PlatformHashCommand {
@@ -57,6 +59,38 @@ public class PlatformHashCommandImpl extends PlatformKeyCommandImpl implements P
         return invokeCommand(new PlatformInvokeCommand<Object>(PlatformRedisCommandType.HSET) {
             public Object exe(RedissonClient redissonClient) {
                 return getRedissonClient().getMap(key, hashCodec).put(fieldKey, value);
+            }
+        });
+    }
+
+    @Override
+    public Map<String, Object> hmget(final String key, final String... fields) {
+        return invokeCommand(new PlatformInvokeCommand<Map>(PlatformRedisCommandType.HMGET) {
+            public Map exe(RedissonClient redissonClient) {
+                Set<Object> array = new HashSet<Object>(fields.length);
+                for (String field : fields) {
+                    array.add(field);
+                }
+                return getRedissonClient().getMap(key, hashCodec).getAll(array);
+            }
+        });
+    }
+
+    @Override
+    public Void hmset(final String key, final Map<String, Object> map) {
+        return invokeCommand(new PlatformInvokeCommand<Void>(PlatformRedisCommandType.HMSET) {
+            public Void exe(RedissonClient redissonClient) {
+                getRedissonClient().getMap(key, hashCodec).putAll(map);
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public Object hincrby(final String key, final String fieldKey, final int by) {
+        return invokeCommand(new PlatformInvokeCommand<Object>(PlatformRedisCommandType.HINCRBY) {
+            public Object exe(RedissonClient redissonClient) {
+                return (Object) getRedissonClient().getMap(key, hashCodec).addAndGet(fieldKey, by);
             }
         });
     }

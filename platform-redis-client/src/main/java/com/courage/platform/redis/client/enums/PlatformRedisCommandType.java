@@ -16,7 +16,7 @@ public enum PlatformRedisCommandType {
     LRANGE, LPUSH, LLEN, LTRIM, RPOP, LPOP, RPUSH, BLPOP, BRPOP,
 
     //hash 命令
-    HKEYS, HDEL, HEXISTS, HGET, HSET, HSET_EX, HINCRBY, HMGET,
+    HKEYS, HDEL, HEXISTS, HGET, HSET, HSET_EX, HINCRBY, HMGET,HMSET,
 
 
     //set命令

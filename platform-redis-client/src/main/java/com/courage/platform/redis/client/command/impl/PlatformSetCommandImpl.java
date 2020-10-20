@@ -25,6 +25,7 @@ public class PlatformSetCommandImpl extends PlatformKeyCommandImpl implements Pl
         super(redissonClient);
     }
 
+
     @Override
     public Boolean addAndEx(final String key, final int second, final Object... value) {
         return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.SADD) {
@@ -44,6 +45,7 @@ public class PlatformSetCommandImpl extends PlatformKeyCommandImpl implements Pl
         return invokeCommand(new PlatformInvokeCommand<Set<T>>(PlatformRedisCommandType.SMEMBERS) {
             @Override
             public Set<T> exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+                Object o = redissonClient.getSet(key, codec);
                 return (Set<T>) redissonClient.getSet(key, codec).readAll();
             }
         });

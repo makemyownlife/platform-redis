@@ -1,8 +1,8 @@
 package com.courage.platform.redis.client.command.impl;
 
-import com.courage.platform.redis.client.command.PlatformInvokeCommand;
-import com.courage.platform.redis.client.command.PlatformZSetCommand;
-import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
+import com.iflytek.edu.ecs.app.common.redis.command.PlatformInvokeCommand;
+import com.iflytek.edu.ecs.app.common.redis.command.PlatformZSetCommand;
+import com.iflytek.edu.ecs.app.common.redis.enums.PlatformRedisCommandType;
 import org.redisson.api.*;
 import org.redisson.codec.JsonJacksonCodec;
 
