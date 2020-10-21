@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * 本地缓冲 (每张表预留20个)
+ * 本地缓冲 (每张表预留50个)
  */
 public class LocalSequence {
 

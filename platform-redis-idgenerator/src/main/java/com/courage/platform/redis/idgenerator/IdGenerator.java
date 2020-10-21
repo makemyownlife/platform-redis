@@ -84,7 +84,17 @@ public class IdGenerator {
     }
 
     public static void main(String[] args) {
-
+        PlatformSentinelServersConfig platformSentinelServersConfig = new PlatformSentinelServersConfig();
+        platformSentinelServersConfig.setNodes("CloudSentineRedis01Host:26101,CloudSentineRedis02Host:26101,CloudSentineRedis03Host:26101");
+        platformSentinelServersConfig.setMaster("master6101");
+        platformSentinelServersConfig.setPassword("M0uMBZfCu9FCVv#^");
+        PlatformRedisClient platformRedisClient = new PlatformRedisClient(platformSentinelServersConfig);
+        IdGenerator idGenerator = new IdGenerator(platformRedisClient);
+        for (int i = 0; i < 1000; i++) {
+            long start = System.currentTimeMillis();
+            Long orderId = idGenerator.createUniqueId("zhangyong", "t_order_base");
+            System.out.println(orderId + " " + Long.toBinaryString(orderId) + " costtime:" + (System.currentTimeMillis() - start) + "ms");
+        }
     }
 
 }
