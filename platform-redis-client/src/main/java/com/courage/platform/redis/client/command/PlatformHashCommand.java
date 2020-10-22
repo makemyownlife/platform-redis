@@ -1,5 +1,6 @@
 package com.courage.platform.redis.client.command;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,5 +21,10 @@ public interface PlatformHashCommand extends PlatformKeyCommand {
     Void hmset(String key, Map<String, Object> map);
 
     Object hincrby(String key, String fieldKey, int by);
+
+    /**
+     * 批量获取多个hash key的hash值
+     */
+    List pipeMultGet(List<String> keyList);
 
 }

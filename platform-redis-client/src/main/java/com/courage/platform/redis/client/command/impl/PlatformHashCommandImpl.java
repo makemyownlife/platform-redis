@@ -3,10 +3,13 @@ package com.courage.platform.redis.client.command.impl;
 import com.courage.platform.redis.client.command.PlatformHashCommand;
 import com.courage.platform.redis.client.command.PlatformInvokeCommand;
 import com.courage.platform.redis.client.enums.PlatformRedisCommandType;
+import org.redisson.api.BatchResult;
+import org.redisson.api.RBatch;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -91,6 +94,21 @@ public class PlatformHashCommandImpl extends PlatformKeyCommandImpl implements P
         return invokeCommand(new PlatformInvokeCommand<Object>(PlatformRedisCommandType.HINCRBY) {
             public Object exe(RedissonClient redissonClient) {
                 return (Object) getRedissonClient().getMap(key, hashCodec).addAndGet(fieldKey, by);
+            }
+        });
+    }
+
+    @Override
+    public List pipeMultGet(final List<String> keyList) {
+        return invokeCommand(new PlatformInvokeCommand<List>(PlatformRedisCommandType.PIPE_HMGET) {
+            public List exe(RedissonClient redissonClient) {
+                RBatch rBatch = redissonClient.createBatch();
+                for (String key : keyList) {
+                    rBatch.getMap(key, hashCodec).readAllMapAsync();
+                }
+                BatchResult res = rBatch.execute();
+                List<?> response = res.getResponses();
+                return response;
             }
         });
     }
