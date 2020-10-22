@@ -15,12 +15,9 @@ public class IdGenerator {
 
     private final static Logger logger = LoggerFactory.getLogger(IdGenerator.class);
 
-    private PlatformRedisClient platformRedisClient;
-
     private PlatformAtomicCommand platformAtomicCommand;
 
     public IdGenerator(PlatformRedisClient platformRedisClient) {
-        this.platformRedisClient = platformRedisClient;
         this.platformAtomicCommand = platformRedisClient.getPlatformAtomicCommand();
     }
 
@@ -56,7 +53,7 @@ public class IdGenerator {
         }
 
         //从redis自增一个步长,放入本地内存中待用
-        String idGeneratorKey = currentTime + ":" + tableName;
+        String idGeneratorKey = IdConstants.ID_REDIS_PFEFIX + currentTime + ":" + tableName;
         Long counter = platformAtomicCommand.incrByEx(idGeneratorKey, IdConstants.STEP_LENGTH, IdConstants.SEQ_EXPIRE_TIME);
         logger.warn("redisKey:{} 序号值:{} ", idGeneratorKey, counter);
 
@@ -89,6 +86,8 @@ public class IdGenerator {
         platformSentinelServersConfig.setMaster("master6101");
         platformSentinelServersConfig.setPassword("M0uMBZfCu9FCVv#^");
         PlatformRedisClient platformRedisClient = new PlatformRedisClient(platformSentinelServersConfig);
+
+        platformRedisClient.getPlatformSetCommand().addAndEx("mylife", 10022, "hni");
         IdGenerator idGenerator = new IdGenerator(platformRedisClient);
         for (int i = 0; i < 1000; i++) {
             long start = System.currentTimeMillis();

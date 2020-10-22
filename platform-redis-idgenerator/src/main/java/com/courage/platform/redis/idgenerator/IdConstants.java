@@ -11,10 +11,12 @@ public class IdConstants {
     // %转换为&操作的换算数值
     public static final long AND_VALUE = PARTITION_LENGTH - 1;
 
-    public static final long STEP_LENGTH = 50;
+    public static final long STEP_LENGTH = 100;
 
     public static final int SEQ_EXPIRE_TIME = 60;
 
     public final static int MAX_SEQ = 4095;
+
+    public final static String ID_REDIS_PFEFIX = "idGenerator:";
 
 }
