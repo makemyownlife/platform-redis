@@ -47,12 +47,12 @@ public class PlatformZSetCommandImpl extends PlatformKeyCommandImpl implements P
     }
 
     @Override
-    public Integer zadd(final String key, final double score, final Object member) {
-        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZADD) {
+    public Boolean zadd(final String key, final double score, final Object member) {
+        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.ZADD) {
             @Override
-            public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
+            public Boolean exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, codec);
-                RFuture<Integer> rFuture = rScoredSortedSetAsync.addAsync(score, member);
+                RFuture<Boolean> rFuture = rScoredSortedSetAsync.addAsync(score, member);
                 return rFuture.get();
             }
         });

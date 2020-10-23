@@ -88,12 +88,17 @@ public class IdGenerator {
         PlatformRedisClient platformRedisClient = new PlatformRedisClient(platformSentinelServersConfig);
 
         platformRedisClient.getPlatformSetCommand().addAndEx("mylife", 10022, "hni");
-        IdGenerator idGenerator = new IdGenerator(platformRedisClient);
-        for (int i = 0; i < 1000; i++) {
-            long start = System.currentTimeMillis();
-            Long orderId = idGenerator.createUniqueId("zhangyong", "t_order_base");
-            System.out.println(orderId + " " + Long.toBinaryString(orderId) + " costtime:" + (System.currentTimeMillis() - start) + "ms");
-        }
+
+        long cur = System.currentTimeMillis();
+        System.out.println(cur);
+
+        platformRedisClient.getPlatformZSetCommand().zadd("feedList", cur, "399");
+//        IdGenerator idGenerator = new IdGenerator(platformRedisClient);
+//        for (int i = 0; i < 1000; i++) {
+//            long start = System.currentTimeMillis();
+//            Long orderId = idGenerator.createUniqueId("zhangyong", "t_order_base");
+//            System.out.println(orderId + " " + Long.toBinaryString(orderId) + " costtime:" + (System.currentTimeMillis() - start) + "ms");
+//        }
     }
 
 }

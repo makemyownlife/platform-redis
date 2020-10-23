@@ -9,7 +9,7 @@ public interface PlatformZSetCommand extends PlatformKeyCommand {
 
     Integer zaddAndEx(final String key, final Map<Object, Double> scoreMembers, int aliveSecond);
 
-    Integer zadd(final String key, final double score, final Object member);
+    Boolean zadd(final String key, final double score, final Object member);
 
     Integer zaddAndEx(final String key, final double score, final String member, int aliveSecond);
 
