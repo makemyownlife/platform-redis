@@ -17,7 +17,8 @@ public class ConfigBuilder {
 
     public static Config buildBySingleServerConfig(PlatformSingleServerConfig singleServerConfig) {
         Config config = new Config();
-        config.useSingleServer().setAddress(singleServerConfig.getAddress());
+        String address = singleServerConfig.getAddress();
+        config.useSingleServer().setAddress(address.startsWith("redis://") ? address : "redis://" + address);
         if (singleServerConfig.getPassword() != null) {
             config.useSingleServer().setPassword(singleServerConfig.getPassword());
         }
@@ -27,7 +28,7 @@ public class ConfigBuilder {
     public static Config buildByClusterServerConfig(PlatformClusterServerConfig clusterServersConfig) {
         Config config = new Config();
         for (String node : clusterServersConfig.getNodes()) {
-            config.useClusterServers().addNodeAddress(node);
+            config.useClusterServers().addNodeAddress(node.startsWith("redis://") ? node : "redis://" + node);
         }
         return config;
     }
