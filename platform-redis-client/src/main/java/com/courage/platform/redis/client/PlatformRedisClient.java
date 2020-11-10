@@ -1,5 +1,6 @@
 package com.courage.platform.redis.client;
 
+import com.courage.platform.redis.client.batch.PlatformBatchCommand;
 import com.courage.platform.redis.client.command.*;
 import com.courage.platform.redis.client.command.impl.*;
 import com.courage.platform.redis.client.config.PlatformClusterServerConfig;
@@ -36,6 +37,8 @@ public class PlatformRedisClient {
     private PlatformHashCommand platformHashCommand;
 
     private PlatformScriptCommand platformScriptCommand;
+
+    private PlatformBatchCommand platformBatchCommand;
 
     public PlatformRedisClient(PlatformSingleServerConfig platformSingleServerConfig) {
         Config config = ConfigBuilder.buildBySingleServerConfig(platformSingleServerConfig);
@@ -76,6 +79,7 @@ public class PlatformRedisClient {
         this.platformZSetCommand = new PlatformZSetCommandImpl(this.redissonClient);
         this.platformHashCommand = new PlatformHashCommandImpl(this.redissonClient);
         this.platformScriptCommand = new PlatformScriptCommandImpl(this.redissonClient);
+        this.platformBatchCommand = new PlatformBatchCommand(this.redissonClient);
     }
 
     public PlatformStringCommand getPlatformStringCommand() {
@@ -104,6 +108,10 @@ public class PlatformRedisClient {
 
     public PlatformScriptCommand getPlatformScriptCommand() {
         return platformScriptCommand;
+    }
+
+    public PlatformBatchCommand getPlatformBatchCommand() {
+        return platformBatchCommand;
     }
 
     public void shutdown() {
