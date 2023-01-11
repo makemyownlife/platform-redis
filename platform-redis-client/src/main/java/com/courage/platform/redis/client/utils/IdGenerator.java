@@ -1,11 +1,9 @@
-package com.courage.platform.redis.idgenerator;
+package com.courage.platform.redis.client.utils;
 
-import com.courage.platform.redis.client.RedisClient;
-import com.courage.platform.redis.client.command.AtomicCommand;
+import com.iflytek.training.framework.redis.PlatformRedisClient;
+import com.iflytek.training.framework.redis.command.PlatformAtomicCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.zip.CRC32;
 
 /**
  * 编号生成器
@@ -14,10 +12,10 @@ public class IdGenerator {
 
     private final static Logger logger = LoggerFactory.getLogger(IdGenerator.class);
 
-    private AtomicCommand atomicCommand;
+    private PlatformAtomicCommand platformAtomicCommand;
 
-    public IdGenerator(RedisClient redisClient) {
-        this.atomicCommand = redisClient.getPlatformAtomicCommand();
+    public IdGenerator(PlatformRedisClient platformRedisClient) {
+        this.platformAtomicCommand = platformRedisClient.getPlatformAtomicCommand();
     }
 
     /**
@@ -26,34 +24,24 @@ public class IdGenerator {
      * @param shardingKey
      * @return
      */
-    public Long createUniqueId(String shardingKey, String tableName) {
+    public Long createUniqueId(String shardingKey) {
         //首先将shardingkey转换成 crc32的编码
-        Long value = null;
-        try {
-            CRC32 crc32 = new CRC32();
-            crc32.update(shardingKey.getBytes("UTF-8"));
-            value = crc32.getValue();
-        } catch (Exception e) {
-            logger.error("update crc32 error:", e);
-        }
+        Integer workerId = StringHashUtil.hashSlot(shardingKey);
 
         Long currentTime = System.currentTimeMillis();
 
-        //转换成中间10位编码
-        Long workerId = Math.abs(value % IdConstants.SHARDING_LENGTH);
-
         //从本地缓冲中获取
-        SeqEntity seqEntity = LocalSequence.getSeqEntity(tableName);
+        SeqEntity seqEntity = LocalSequence.getSeqEntity();
         if (seqEntity != null) {
             return SnowFlakeIdGenerator.getUniqueId(
                     seqEntity.getCurrentTime(),
-                    workerId.intValue(),
+                    workerId,
                     seqEntity.getSeq());
         }
 
         //从redis自增一个步长,放入本地内存中待用
-        String idGeneratorKey = IdConstants.ID_REDIS_PFEFIX + currentTime + ":" + tableName;
-        Long counter = atomicCommand.incrByEx(idGeneratorKey, IdConstants.STEP_LENGTH, IdConstants.SEQ_EXPIRE_TIME);
+        String idGeneratorKey = IdConstants.ID_REDIS_PFEFIX + currentTime;
+        Long counter = platformAtomicCommand.incrByEx(idGeneratorKey, IdConstants.STEP_LENGTH, IdConstants.SEQ_EXPIRE_TIME);
         logger.warn("redisKey:{} 序号值:{} ", idGeneratorKey, counter);
 
         //判断是否有极限情况 ,1ms产生的数据超过了最大序号，那么最有可能原因是 当前机器的时间钟不一样
@@ -66,11 +54,11 @@ public class IdGenerator {
         long cursor = counter - IdConstants.STEP_LENGTH + 1;
         while (cursor <= IdConstants.MAX_SEQ && cursor < counter) {
             SeqEntity newSeqEntity = new SeqEntity(currentTime, new Long(cursor).intValue());
-            LocalSequence.addSeqEntity(tableName, newSeqEntity);
+            LocalSequence.addSeqEntity(newSeqEntity);
             cursor++;
         }
 
-        seqEntity = LocalSequence.getSeqEntity(tableName);
+        seqEntity = LocalSequence.getSeqEntity();
         if (seqEntity == null) {
             return null;
         }
@@ -79,8 +67,17 @@ public class IdGenerator {
         return uniqueId;
     }
 
-    public static void main(String[] args) {
-
+    /**
+     * 生成唯一的序号值（对老班级圈迁移的数据主键整合）
+     *
+     * @param id
+     * @param shardingKey
+     * @return
+     */
+    public Long createOldUniqueId(int id, String shardingKey) {
+        //首先将shardingkey转换成 crc32的编码
+        Integer workerId = StringHashUtil.hashSlot(shardingKey);
+        //id%IdConstants.MAX_SEQ 作为序列号
+        return SnowFlakeIdGenerator.getOldUniqueId(id, null == workerId ? 0 : workerId, id % IdConstants.MAX_SEQ);
     }
-
 }

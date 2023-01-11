@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.springboot.starter.configuration;
 
-import com.courage.platform.redis.client.PlatformRedisClient;
+import com.courage.platform.redis.client.RedisClient;
 import com.courage.platform.redis.client.command.*;
 import org.redisson.config.Config;
 import org.slf4j.Logger;
@@ -19,45 +19,45 @@ public class PlatformRedisClientConfiguration {
     private final static Logger logger = LoggerFactory.getLogger(PlatformRedisClientConfiguration.class);
 
     @Bean
-    public PlatformRedisClient createPlatformRedisClient(Config config) {
-        PlatformRedisClient platformRedisClient = new PlatformRedisClient(config);
-        return platformRedisClient;
+    public RedisClient createPlatformRedisClient(Config config) {
+        RedisClient redisClient = new RedisClient(config);
+        return redisClient;
     }
 
     @Bean
-    @ConditionalOnBean(PlatformRedisClient.class)
-    public PlatformStringCommand createPlatformStringCommand(PlatformRedisClient platformRedisClient) {
-        return platformRedisClient.getPlatformStringCommand();
+    @ConditionalOnBean(RedisClient.class)
+    public StringCommand createPlatformStringCommand(RedisClient redisClient) {
+        return redisClient.getPlatformStringCommand();
     }
 
     @Bean
-    @ConditionalOnBean(PlatformRedisClient.class)
-    public PlatformZSetCommand createPlatformZSetCommand(PlatformRedisClient platformRedisClient) {
-        return platformRedisClient.getPlatformZSetCommand();
+    @ConditionalOnBean(RedisClient.class)
+    public ZSetCommand createPlatformZSetCommand(RedisClient redisClient) {
+        return redisClient.getPlatformZSetCommand();
     }
 
     @Bean
-    @ConditionalOnBean(PlatformRedisClient.class)
-    public PlatformSetCommand createPlatformSetCommand(PlatformRedisClient platformRedisClient) {
-        return platformRedisClient.getPlatformSetCommand();
+    @ConditionalOnBean(RedisClient.class)
+    public SetCommand createPlatformSetCommand(RedisClient redisClient) {
+        return redisClient.getPlatformSetCommand();
     }
 
     @Bean
-    @ConditionalOnBean(PlatformRedisClient.class)
-    public PlatformAtomicCommand createPlatformAtomicCommand(PlatformRedisClient platformRedisClient) {
-        return platformRedisClient.getPlatformAtomicCommand();
+    @ConditionalOnBean(RedisClient.class)
+    public AtomicCommand createPlatformAtomicCommand(RedisClient redisClient) {
+        return redisClient.getPlatformAtomicCommand();
     }
 
     @Bean
-    @ConditionalOnBean(PlatformRedisClient.class)
-    public PlatformHashCommand createPlatformHashCommand(PlatformRedisClient platformRedisClient) {
-        return platformRedisClient.getPlatformHashCommand();
+    @ConditionalOnBean(RedisClient.class)
+    public HashCommand createPlatformHashCommand(RedisClient redisClient) {
+        return redisClient.getPlatformHashCommand();
     }
 
     @Bean
-    @ConditionalOnBean(PlatformRedisClient.class)
-    public PlatformScriptCommand createPlatformScriptCommand(PlatformRedisClient platformRedisClient) {
-        return platformRedisClient.getPlatformScriptCommand();
+    @ConditionalOnBean(RedisClient.class)
+    public ScriptCommand createPlatformScriptCommand(RedisClient redisClient) {
+        return redisClient.getPlatformScriptCommand();
     }
 
 

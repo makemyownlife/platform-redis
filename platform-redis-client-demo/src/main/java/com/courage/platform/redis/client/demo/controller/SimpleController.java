@@ -1,7 +1,7 @@
 package com.courage.platform.redis.client.demo.controller;
 
-import com.courage.platform.redis.client.PlatformRedisClient;
-import com.courage.platform.redis.client.command.PlatformStringCommand;
+import com.courage.platform.redis.client.RedisClient;
+import com.courage.platform.redis.client.command.StringCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +16,27 @@ public class SimpleController {
     private final static Logger logger = LoggerFactory.getLogger(SimpleController.class);
 
     @Autowired
-    private PlatformRedisClient platformRedisClient;
+    private RedisClient redisClient;
 
     @Autowired
-    private PlatformStringCommand sss;
+    private StringCommand sss;
 
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
     public String hellodanbiao() {
-        String mylife = platformRedisClient.getPlatformStringCommand().get("hello");
+        String mylife = redisClient.getPlatformStringCommand().get("hello");
         System.out.println(mylife);
-        platformRedisClient.getPlatformStringCommand().set("hello", "zhang勇");
+        redisClient.getPlatformStringCommand().set("hello", "zhang勇");
         return "hello-service";
     }
 
     @RequestMapping(value = "/generatorId", method = RequestMethod.GET)
     @ResponseBody
     public String generatorId() {
-        String mylife = platformRedisClient.getPlatformStringCommand().get("hello");
+        String mylife = redisClient.getPlatformStringCommand().get("hello");
         System.out.println(mylife);
-        platformRedisClient.getPlatformStringCommand().set("hello", "zhang勇");
+        redisClient.getPlatformStringCommand().set("hello", "zhang勇");
         return "hello-service";
     }
 

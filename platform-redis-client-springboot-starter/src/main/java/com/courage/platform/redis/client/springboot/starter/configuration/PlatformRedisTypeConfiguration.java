@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.springboot.starter.configuration;
 
-import com.courage.platform.redis.client.config.PlatformClusterServerConfig;
+import com.courage.platform.redis.client.config.ClusterServerConfig;
 import com.courage.platform.redis.client.config.PlatformSingleServerConfig;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -48,15 +48,15 @@ public class PlatformRedisTypeConfiguration {
 
         @Bean(value = "platformClusterServerConfig")
         @ConfigurationProperties(prefix = "platform.redis.clusterserver")
-        public PlatformClusterServerConfig getPlatformClusterServerConfig() {
-            PlatformClusterServerConfig config = new PlatformClusterServerConfig();
+        public ClusterServerConfig getPlatformClusterServerConfig() {
+            ClusterServerConfig config = new ClusterServerConfig();
             return config;
         }
 
         @Bean
-        public Config clusterServerConfig(PlatformClusterServerConfig platformClusterServerConfig) {
+        public Config clusterServerConfig(ClusterServerConfig clusterServerConfig) {
             Config config = new Config();
-            for (String node : platformClusterServerConfig.getNodes()) {
+            for (String node : clusterServerConfig.getNodes()) {
                 config.useClusterServers().addNodeAddress(node);
             }
             return config;

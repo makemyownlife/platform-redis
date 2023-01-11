@@ -1,10 +1,10 @@
 package com.courage.platform.redis.client.test;
 
-import com.courage.platform.redis.client.PlatformRedisClient;
+import com.courage.platform.redis.client.RedisClient;
 import com.courage.platform.redis.client.batch.pipeline.HashMgetCommand;
 import com.courage.platform.redis.client.batch.pipeline.PiplelineCommand;
 import com.courage.platform.redis.client.batch.pipeline.ZsetRangeCommand;
-import com.courage.platform.redis.client.config.PlatformSentinelServersConfig;
+import com.courage.platform.redis.client.config.SentinelServersConfig;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,15 +14,15 @@ import java.util.List;
 
 public class PlatformPlatformBatchCommandUnitTest {
 
-    private PlatformRedisClient platformRedisClient;
+    private RedisClient redisClient;
 
     @Before
     public void before() {
-        PlatformSentinelServersConfig platformSentinelServersConfig = new PlatformSentinelServersConfig();
-        platformSentinelServersConfig.setNodes("CloudSentineRedis01Host:26101,CloudSentineRedis02Host:26101,CloudSentineRedis03Host:26101");
-        platformSentinelServersConfig.setMaster("master6101");
-        platformSentinelServersConfig.setPassword("M0uMBZfCu9FCVv#^");
-        this.platformRedisClient = new PlatformRedisClient(platformSentinelServersConfig);
+        SentinelServersConfig sentinelServersConfig = new SentinelServersConfig();
+        sentinelServersConfig.setNodes("CloudSentineRedis01Host:26101,CloudSentineRedis02Host:26101,CloudSentineRedis03Host:26101");
+        sentinelServersConfig.setMaster("master6101");
+        sentinelServersConfig.setPassword("M0uMBZfCu9FCVv#^");
+        this.redisClient = new RedisClient(sentinelServersConfig);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class PlatformPlatformBatchCommandUnitTest {
 
         piplelineCommandList.add(hashMgetCommand);
         piplelineCommandList.add(zsetRangeCommand);
-        List<?> result = this.platformRedisClient.getPlatformBatchCommand().executePipelineCommands(piplelineCommandList);
+        List<?> result = this.redisClient.getPlatformBatchCommand().executePipelineCommands(piplelineCommandList);
         System.out.println(result);
     }
 

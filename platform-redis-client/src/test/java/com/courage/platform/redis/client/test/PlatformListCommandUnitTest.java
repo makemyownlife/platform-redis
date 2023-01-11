@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.test;
 
-import com.courage.platform.redis.client.PlatformRedisClient;
+import com.courage.platform.redis.client.RedisClient;
 import org.redisson.config.Config;
 
 /**
@@ -11,10 +11,10 @@ public class PlatformListCommandUnitTest {
     public static void main(String[] args) {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
-        PlatformRedisClient platformRedisClient = new PlatformRedisClient(config);
+        RedisClient redisClient = new RedisClient(config);
 
-        platformRedisClient.getPlatformListCommand().lpush("list", "zhangyong张勇");
-        platformRedisClient.getPlatformListCommand().rpush("list", "gaohui");
+        redisClient.getPlatformListCommand().lpush("list", "zhangyong张勇");
+        redisClient.getPlatformListCommand().rpush("list", "gaohui");
     }
 
 }
