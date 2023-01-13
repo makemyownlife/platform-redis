@@ -2,6 +2,7 @@ package com.courage.platform.redis.client.utils;
 
 import com.courage.platform.redis.client.config.ClusterConfig;
 import com.courage.platform.redis.client.config.SentinelConfig;
+import com.courage.platform.redis.client.config.SingleConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.config.Config;
 import org.redisson.config.ReadMode;
@@ -14,14 +15,14 @@ import java.util.List;
  */
 public class ConfigBuilder {
 
-    public static Config buildBySingleServerConfig(SingleServerConfig singleServerConfig) {
+    public static Config buildBySingleServerConfig(SingleConfig singleConfig) {
         Config config = new Config();
-        String address = singleServerConfig.getAddress();
+        String address = singleConfig.getAddress();
         config.useSingleServer().setAddress(address.startsWith("redis://") ? address : "redis://" + address);
-        if (singleServerConfig.getPassword() != null) {
-            config.useSingleServer().setPassword(singleServerConfig.getPassword());
+        if (singleConfig.getPassword() != null) {
+            config.useSingleServer().setPassword(singleConfig.getPassword());
         }
-        config.useSingleServer().setDatabase(singleServerConfig.getDatabase());
+        config.useSingleServer().setDatabase(singleConfig.getDatabase());
         return config;
     }
 

@@ -4,6 +4,7 @@ import com.courage.platform.redis.client.command.*;
 import com.courage.platform.redis.client.command.impl.*;
 import com.courage.platform.redis.client.config.ClusterConfig;
 import com.courage.platform.redis.client.config.SentinelConfig;
+import com.courage.platform.redis.client.config.SingleConfig;
 import com.courage.platform.redis.client.enums.RedisCodec;
 import com.courage.platform.redis.client.lock.RedisLock;
 import com.courage.platform.redis.client.lock.impl.RedisLockImpl;
@@ -18,8 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 平台redis 客户端
- * Created by zhangyong on 2020/1/18.
+ *  平台redis 客户端
+ *  Created by zhangyong on 2020/1/18.
  */
 public class RedisOperation {
 
@@ -27,7 +28,7 @@ public class RedisOperation {
 
     private RedissonClient redissonClient;
 
-    public RedisOperation(SingleServerConfig SingleServerConfig) {
+    public RedisOperation(SingleConfig SingleServerConfig) {
         Config config = ConfigBuilder.buildBySingleServerConfig(SingleServerConfig);
         //默认string编解码
         config.setCodec(new StringCodec());

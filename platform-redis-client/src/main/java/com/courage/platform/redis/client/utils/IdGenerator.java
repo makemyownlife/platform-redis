@@ -68,7 +68,7 @@ public class IdGenerator {
     }
 
     /**
-     * 生成唯一的序号值（对老班级圈迁移的数据主键整合）
+     * 生成唯一的序号值（迁移的数据主键整合）
      *
      * @param id
      * @param shardingKey

@@ -3,6 +3,7 @@ package com.courage.platform.redis.client.command.impl;
 
 import com.courage.platform.redis.client.command.InvokeCommand;
 import com.courage.platform.redis.client.command.StringCommand;
+import com.courage.platform.redis.client.enums.RedisCodec;
 import com.courage.platform.redis.client.enums.RedisCommandType;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
@@ -18,6 +19,10 @@ public class StringCommandImpl extends KeyCommandImpl implements StringCommand {
 
     public StringCommandImpl(RedissonClient redissonClient) {
         super(redissonClient);
+    }
+
+    public StringCommandImpl(RedissonClient redissonClient, RedisCodec redisCodec) {
+        super(redissonClient, redisCodec);
     }
 
     public String get(final String key) {
