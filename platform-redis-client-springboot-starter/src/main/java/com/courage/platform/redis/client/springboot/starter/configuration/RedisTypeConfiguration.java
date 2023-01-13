@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
  * 根据type类型不同 配置不同的
  * Created by zhangyong on 2020/1/21.
  */
-@AutoConfigureBefore(PlatformRedisClientConfiguration.class)
-public class PlatformRedisTypeConfiguration {
+@AutoConfigureBefore(RedisClientConfiguration.class)
+public class RedisTypeConfiguration {
 
     @Configuration
     @ConditionalOnMissingBean(Config.class)

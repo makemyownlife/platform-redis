@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan("com.courage.platform.redis")
-@Import(value = {PlatformRedisTypeConfiguration.class})
-public class PlatformRedisClientConfiguration {
+@Import(value = {RedisTypeConfiguration.class})
+public class RedisClientConfiguration {
 
-    private final static Logger logger = LoggerFactory.getLogger(PlatformRedisClientConfiguration.class);
+    private final static Logger logger = LoggerFactory.getLogger(RedisClientConfiguration.class);
 
     @Bean
     public RedisOperation createPlatformRedisClient(Config config) {
