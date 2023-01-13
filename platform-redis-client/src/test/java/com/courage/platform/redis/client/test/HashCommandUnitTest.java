@@ -1,16 +1,21 @@
 package com.courage.platform.redis.client.test;
 
 import com.courage.platform.redis.client.RedisOperation;
+import com.courage.platform.redis.client.command.HashCommand;
 import com.courage.platform.redis.client.config.SingleConfig;
 import org.junit.Before;
 import org.junit.Test;
-import org.redisson.config.Config;
+import org.redisson.api.RMapCache;
+import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
+import org.redisson.codec.JsonJacksonCodec;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
- *  hash 单元测试
+ * hash 单元测试
  * Created by zhangyong on 2020/1/27.
  */
 public class HashCommandUnitTest {
@@ -26,19 +31,40 @@ public class HashCommandUnitTest {
 
     @Test
     public void setValue() {
-        Map<String, Object> mapping = new HashMap<String, Object>();
-        mapping.put("one", "张勇");
-        Object my = this.redisOperation.getHashCommand().hset("myhash", "time", mapping);
-        System.out.println(my);
-        mapping.put("two", "高慧");
-        Object my1 = this.redisOperation.getHashCommand().hset("myhash", "time", mapping);
-        System.out.println(my1);
+        HashCommand hashCommand = this.redisOperation.getHashCommand();
+        hashCommand.hset("myhash", "time", "mybatis");
+        // 存储字符串
+        hashCommand.hset("myhash", "isstr", "李林");
     }
 
     @Test
-    public void get() {
-        Object my = this.redisOperation.getHashCommand().hget("myhash", "time");
-        System.out.println(my);
+    public void setPutAll() throws Exception {
+        HashCommand hashCommand = this.redisOperation.getHashCommand();
+        Map<String, Object> putAll = new HashMap<>(4);
+        putAll.put("a", "你好");
+        putAll.put("b", 1);
+        hashCommand.hmset("testPutAll", putAll);
+        Thread.sleep(2000L);
+        Map<String, Object> putAllMap = hashCommand.hmget("testPutAll", "a", "b", "c");
+        System.out.println(putAllMap);
+    }
+
+    @Test
+    public void send() {
+        RedissonClient redissonClient = redisOperation.getRedissonClient();
+        RMapCache<String, String> verificationCodeMap = redissonClient.getMapCache(String.format("%s:MapCache[%s]", "myapp", "sms_verification_code_map") , StringCodec.INSTANCE);
+        String loginKey = "15011319235" + "-login";
+        Object loginCount = verificationCodeMap.get(loginKey);
+        if (loginCount == null) {
+            verificationCodeMap.put(loginKey, "1", 10 * 60, TimeUnit.SECONDS);
+        } else {
+            //如果不是10分钟内第一次登录,登录次数递增
+            Object tempLoginCount = verificationCodeMap.addAndGet(loginKey, 1);
+            System.out.println((Integer) tempLoginCount);
+            if((Integer) tempLoginCount > 5) {
+                System.out.println("发送次数已经超限");
+            }
+        }
     }
 
 }

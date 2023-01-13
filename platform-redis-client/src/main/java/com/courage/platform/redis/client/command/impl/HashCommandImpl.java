@@ -57,8 +57,8 @@ public class HashCommandImpl extends KeyCommandImpl implements HashCommand {
     }
 
     @Override
-    public Object hset(final String key, final String fieldKey, final Object value) {
-        return invokeCommand(new InvokeCommand<Object>(RedisCommandType.HSET) {
+    public void hset(final String key, final String fieldKey, final Object value) {
+        invokeCommand(new InvokeCommand<Object>(RedisCommandType.HSET) {
             public Object exe(RedissonClient redissonClient) {
                 return getRedissonClient().getMap(key, getCodec()).put(fieldKey, value);
             }
@@ -92,7 +92,7 @@ public class HashCommandImpl extends KeyCommandImpl implements HashCommand {
     public Object hincrby(final String key, final String fieldKey, final int by) {
         return invokeCommand(new InvokeCommand<Object>(RedisCommandType.HINCRBY) {
             public Object exe(RedissonClient redissonClient) {
-                return (Object) getRedissonClient().getMap(key, getCodec()).addAndGet(fieldKey, by);
+                return getRedissonClient().getMap(key, getCodec()).addAndGet(fieldKey, by);
             }
         });
     }

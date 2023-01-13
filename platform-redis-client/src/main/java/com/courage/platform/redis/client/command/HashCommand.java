@@ -13,7 +13,7 @@ public interface HashCommand extends KeyCommand {
 
     <T> T hget(String key, String fieldKey);
 
-    Object hset(String key, String fieldKey, Object value);
+    void hset(String key, String fieldKey, Object value);
 
     Map<String, Object> hmget(String key, String... field);
 
