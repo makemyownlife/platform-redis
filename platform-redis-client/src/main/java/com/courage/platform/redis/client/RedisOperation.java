@@ -68,6 +68,11 @@ public class RedisOperation {
         return StringCommand;
     }
 
+    public StringCommand getStringCommand(RedisCodec RedisCodec) {
+        StringCommand StringCommand = new StringCommandImpl(this.redissonClient , RedisCodec);
+        return StringCommand;
+    }
+
     public AtomicCommand getAtomicCommand() {
         AtomicCommand AtomicCommand = new AtomicCommandImpl(this.redissonClient);
         return AtomicCommand;
@@ -78,8 +83,8 @@ public class RedisOperation {
         return ListCommand;
     }
 
-    public ListCommand getListCommand(RedisCodec RedisCodec) {
-        ListCommand ListCommand = new ListCommandImpl(this.redissonClient, RedisCodec);
+    public ListCommand getListCommand(RedisCodec redisCodec) {
+        ListCommand ListCommand = new ListCommandImpl(this.redissonClient, redisCodec);
         return ListCommand;
     }
 
@@ -88,8 +93,8 @@ public class RedisOperation {
         return SetCommand;
     }
 
-    public SetCommand getSetCommand(RedisCodec RedisCodec) {
-        SetCommand SetCommand = new SetCommandImpl(this.redissonClient, RedisCodec);
+    public SetCommand getSetCommand(RedisCodec redisCodec) {
+        SetCommand SetCommand = new SetCommandImpl(this.redissonClient, redisCodec);
         return SetCommand;
     }
 
@@ -98,8 +103,8 @@ public class RedisOperation {
         return ZSetCommand;
     }
 
-    public ZSetCommand getZSetCommand(RedisCodec RedisCodec) {
-        ZSetCommand ZSetCommand = new ZSetCommandImpl(this.redissonClient, RedisCodec);
+    public ZSetCommand getZSetCommand(RedisCodec redisCodec) {
+        ZSetCommand ZSetCommand = new ZSetCommandImpl(this.redissonClient, redisCodec);
         return ZSetCommand;
     }
 
@@ -108,8 +113,8 @@ public class RedisOperation {
         return HashCommand;
     }
 
-    public HashCommand getHashCommand(RedisCodec RedisCodec) {
-        HashCommand HashCommand = new HashCommandImpl(this.redissonClient, RedisCodec);
+    public HashCommand getHashCommand(RedisCodec redisCodec) {
+        HashCommand HashCommand = new HashCommandImpl(this.redissonClient, redisCodec);
         return HashCommand;
     }
 

@@ -1,6 +1,7 @@
 package com.courage.platform.redis.client.test;
 
 import com.courage.platform.redis.client.RedisOperation;
+import com.courage.platform.redis.client.config.SingleConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.redisson.config.Config;
@@ -18,8 +19,8 @@ public class HashCommandUnitTest {
 
     @Before
     public void start() {
-        Config config = new Config();
-        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
+        SingleConfig config = new SingleConfig();
+        config.setAddress("redis://127.0.0.1:6379");
         this.redisOperation = new RedisOperation(config);
     }
 

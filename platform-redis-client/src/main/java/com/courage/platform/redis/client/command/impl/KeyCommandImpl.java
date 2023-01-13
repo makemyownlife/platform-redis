@@ -17,8 +17,8 @@ public class KeyCommandImpl implements KeyCommand {
 
     private RedissonClient redissonClient;
 
-    //默认JACKSON 编码
-    private RedisCodec platformRedisCodec = RedisCodec.JSON;
+    //默认 String 编码
+    private RedisCodec platformRedisCodec = RedisCodec.STRING;
 
     public KeyCommandImpl(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
