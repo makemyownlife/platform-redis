@@ -1,7 +1,7 @@
 package com.courage.platform.redis.client.utils;
 
-import com.courage.platform.redis.client.config.ClusterServerConfig;
-import com.courage.platform.redis.client.config.SentinelServersConfig;
+import com.courage.platform.redis.client.config.ClusterConfig;
+import com.courage.platform.redis.client.config.SentinelConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.config.Config;
 import org.redisson.config.ReadMode;
@@ -25,7 +25,7 @@ public class ConfigBuilder {
         return config;
     }
 
-    public static Config buildByClusterServerConfig(ClusterServerConfig clusterServersConfig) {
+    public static Config buildByClusterServerConfig(ClusterConfig clusterServersConfig) {
         Config config = new Config();
         for (String node : clusterServersConfig.getNodes()) {
             config.useClusterServers().addNodeAddress(node.startsWith("redis://") ? node : "redis://" + node);
@@ -33,20 +33,20 @@ public class ConfigBuilder {
         return config;
     }
 
-    public static Config buildBySentinelServerConfig(SentinelServersConfig platformSentinelServersConfig) {
+    public static Config buildBySentinelServerConfig(SentinelConfig platformSentinelConfig) {
         Config config = new Config();
-        List<String> nodes = platformSentinelServersConfig.getNodes();
+        List<String> nodes = platformSentinelConfig.getNodes();
         String[] array = new String[nodes.size()];
         for (int i = 0; i < nodes.size(); i++) {
             String item = nodes.get(i);
             array[i] = item.startsWith("redis://") ? item : "redis://" + item;
         }
         config.useSentinelServers().setReadMode(ReadMode.MASTER);
-        config.useSentinelServers().addSentinelAddress(array).setDatabase(platformSentinelServersConfig.getDatabase()).setMasterName(platformSentinelServersConfig.getMaster());
-        if (StringUtils.isNotBlank(platformSentinelServersConfig.getPassword())) {
-            config.useSentinelServers().setPassword(platformSentinelServersConfig.getPassword());
+        config.useSentinelServers().addSentinelAddress(array).setDatabase(platformSentinelConfig.getDatabase()).setMasterName(platformSentinelConfig.getMaster());
+        if (StringUtils.isNotBlank(platformSentinelConfig.getPassword())) {
+            config.useSentinelServers().setPassword(platformSentinelConfig.getPassword());
         }
-        config.useSentinelServers().setDatabase(platformSentinelServersConfig.getDatabase());
+        config.useSentinelServers().setDatabase(platformSentinelConfig.getDatabase());
         return config;
     }
 

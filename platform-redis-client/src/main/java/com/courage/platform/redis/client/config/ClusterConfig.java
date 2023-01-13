@@ -6,7 +6,7 @@ import java.util.List;
  * redis 集群服务
  * Created by zhangyong on 2020/1/22.
  */
-public class ClusterServerConfig {
+public class ClusterConfig {
 
     private List<String> nodes;
 

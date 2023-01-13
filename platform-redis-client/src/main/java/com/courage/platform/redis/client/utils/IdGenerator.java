@@ -1,7 +1,7 @@
 package com.courage.platform.redis.client.utils;
 
-import com.iflytek.training.framework.redis.PlatformRedisClient;
-import com.iflytek.training.framework.redis.command.PlatformAtomicCommand;
+import com.courage.platform.redis.client.RedisOperation;
+import com.courage.platform.redis.client.command.AtomicCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,10 +12,10 @@ public class IdGenerator {
 
     private final static Logger logger = LoggerFactory.getLogger(IdGenerator.class);
 
-    private PlatformAtomicCommand platformAtomicCommand;
+    private AtomicCommand platformAtomicCommand;
 
-    public IdGenerator(PlatformRedisClient platformRedisClient) {
-        this.platformAtomicCommand = platformRedisClient.getPlatformAtomicCommand();
+    public IdGenerator(RedisOperation platformRedisOperation) {
+        this.platformAtomicCommand = platformRedisOperation.getAtomicCommand();
     }
 
     /**

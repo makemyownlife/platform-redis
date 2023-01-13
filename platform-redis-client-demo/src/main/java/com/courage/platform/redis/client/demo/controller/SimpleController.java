@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.demo.controller;
 
-import com.courage.platform.redis.client.RedisClient;
+import com.courage.platform.redis.client.RedisOperation;
 import com.courage.platform.redis.client.command.StringCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class SimpleController {
     private final static Logger logger = LoggerFactory.getLogger(SimpleController.class);
 
     @Autowired
-    private RedisClient redisClient;
+    private RedisOperation redisOperation;
 
     @Autowired
     private StringCommand sss;
@@ -25,18 +25,18 @@ public class SimpleController {
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
     public String hellodanbiao() {
-        String mylife = redisClient.getPlatformStringCommand().get("hello");
+        String mylife = redisOperation.getStringCommand().get("hello");
         System.out.println(mylife);
-        redisClient.getPlatformStringCommand().set("hello", "zhang勇");
+        redisOperation.getStringCommand().set("hello", "zhang勇");
         return "hello-service";
     }
 
     @RequestMapping(value = "/generatorId", method = RequestMethod.GET)
     @ResponseBody
     public String generatorId() {
-        String mylife = redisClient.getPlatformStringCommand().get("hello");
+        String mylife = redisOperation.getStringCommand().get("hello");
         System.out.println(mylife);
-        redisClient.getPlatformStringCommand().set("hello", "zhang勇");
+        redisOperation.getStringCommand().set("hello", "zhang勇");
         return "hello-service";
     }
 

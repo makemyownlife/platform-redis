@@ -1,16 +1,13 @@
 package com.courage.platform.redis.client;
 
-import com.courage.platform.redis.client.command.AtomicCommand;
-import com.courage.platform.redis.client.command.ListCommand;
-import com.courage.platform.redis.client.command.SetCommand;
-import com.courage.platform.redis.client.command.StringCommand;
-import com.courage.platform.redis.client.command.impl.AtomicCommandImpl;
-import com.courage.platform.redis.client.command.impl.ListCommandImpl;
-import com.courage.platform.redis.client.command.impl.SetCommandImpl;
-import com.courage.platform.redis.client.command.impl.StringCommandImpl;
-import com.courage.platform.redis.client.config.ClusterServerConfig;
-import com.courage.platform.redis.client.config.SentinelServersConfig;
+import com.courage.platform.redis.client.command.*;
+import com.courage.platform.redis.client.command.impl.*;
+import com.courage.platform.redis.client.config.ClusterConfig;
+import com.courage.platform.redis.client.config.SentinelConfig;
 import com.courage.platform.redis.client.enums.RedisCodec;
+import com.courage.platform.redis.client.lock.RedisLock;
+import com.courage.platform.redis.client.lock.impl.RedisLockImpl;
+import com.courage.platform.redis.client.queue.RedisMessageQueueBuilder;
 import com.courage.platform.redis.client.utils.ConfigBuilder;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -24,34 +21,34 @@ import org.slf4j.LoggerFactory;
  * 平台redis 客户端
  * Created by zhangyong on 2020/1/18.
  */
-public class RedisClient {
+public class RedisOperation {
 
-    private final static Logger logger = LoggerFactory.getLogger(RedisClient.class);
+    private final static Logger logger = LoggerFactory.getLogger(RedisOperation.class);
 
     private RedissonClient redissonClient;
 
-    public RedisClient(SingleServerConfig SingleServerConfig) {
+    public RedisOperation(SingleServerConfig SingleServerConfig) {
         Config config = ConfigBuilder.buildBySingleServerConfig(SingleServerConfig);
         //默认string编解码
         config.setCodec(new StringCodec());
         this.redissonClient = Redisson.create(config);
     }
 
-    public RedisClient(Config config) {
+    public RedisOperation(Config config) {
         //默认string编解码
         config.setCodec(new StringCodec());
         this.redissonClient = Redisson.create(config);
     }
 
-    public RedisClient(ClusterServerConfig ClusterServerConfig) {
-        Config config = ConfigBuilder.buildByClusterServerConfig(ClusterServerConfig);
+    public RedisOperation(ClusterConfig ClusterConfig) {
+        Config config = ConfigBuilder.buildByClusterServerConfig(ClusterConfig);
         //默认string编解码
         config.setCodec(new StringCodec());
         this.redissonClient = Redisson.create(config);
     }
 
-    public RedisClient(SentinelServersConfig SentinelServersConfig) {
-        Config config = ConfigBuilder.buildBySentinelServerConfig(SentinelServersConfig);
+    public RedisOperation(SentinelConfig SentinelConfig) {
+        Config config = ConfigBuilder.buildBySentinelServerConfig(SentinelConfig);
         //默认string编解码
         config.setCodec(new StringCodec());
         this.redissonClient = Redisson.create(config);
@@ -121,7 +118,7 @@ public class RedisClient {
     }
 
     public RedisLock getLock(String name) {
-        RedisLock redisLock = new RedisLock(this.redissonClient, name);
+        RedisLock redisLock = new RedisLockImpl(this.redissonClient, name);
         return redisLock;
     }
 

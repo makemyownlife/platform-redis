@@ -43,7 +43,7 @@ public class RedisMessageConsumer {
         subscribeTable.put(queueName, redisMessageListener);
     }
 
-    private void consumeQueue(String queueName) {
+    private void consumeQueue(final String queueName) {
         //多线程消费消息
         Thread consumeThread = new Thread(new Runnable() {
             @Override

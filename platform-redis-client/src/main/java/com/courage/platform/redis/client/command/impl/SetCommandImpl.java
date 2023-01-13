@@ -1,9 +1,9 @@
 package com.courage.platform.redis.client.command.impl;
 
-import com.iflytek.training.framework.redis.command.PlatformInvokeCommand;
-import com.iflytek.training.framework.redis.command.PlatformSetCommand;
-import com.iflytek.training.framework.redis.enums.PlatformRedisCodec;
-import com.iflytek.training.framework.redis.enums.PlatformRedisCommandType;
+import com.courage.platform.redis.client.command.InvokeCommand;
+import com.courage.platform.redis.client.command.SetCommand;
+import com.courage.platform.redis.client.enums.RedisCodec;
+import com.courage.platform.redis.client.enums.RedisCommandType;
 import org.redisson.api.RBatch;
 import org.redisson.api.RFuture;
 import org.redisson.api.RedissonClient;
@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class SetCommandImpl extends KeyCommandImpl implements PlatformSetCommand {
+public class SetCommandImpl extends KeyCommandImpl implements SetCommand {
 
     private final static Logger logger = LoggerFactory.getLogger(SetCommandImpl.class);
 
@@ -23,14 +23,13 @@ public class SetCommandImpl extends KeyCommandImpl implements PlatformSetCommand
         super(redissonClient);
     }
 
-    public SetCommandImpl(RedissonClient redissonClient, PlatformRedisCodec platformRedisCodec) {
+    public SetCommandImpl(RedissonClient redissonClient, RedisCodec platformRedisCodec) {
         super(redissonClient, platformRedisCodec);
     }
 
-
     @Override
     public Boolean addAndEx(final String key, final int second, final Object... value) {
-        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.SADD) {
+        return invokeCommand(new InvokeCommand<Boolean>(RedisCommandType.SADD) {
             @Override
             public Boolean exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RBatch batch = getRedissonClient().createBatch();
@@ -44,7 +43,7 @@ public class SetCommandImpl extends KeyCommandImpl implements PlatformSetCommand
 
     @Override
     public <T> Set<T> getMembers(final String key) {
-        return invokeCommand(new PlatformInvokeCommand<Set<T>>(PlatformRedisCommandType.SMEMBERS) {
+        return invokeCommand(new InvokeCommand<Set<T>>(RedisCommandType.SMEMBERS) {
             @Override
             public Set<T> exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 Object o = redissonClient.getSet(key, getCodec());
@@ -55,7 +54,7 @@ public class SetCommandImpl extends KeyCommandImpl implements PlatformSetCommand
 
     @Override
     public Boolean removes(final String key, final Object... value) {
-        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.SMOVE) {
+        return invokeCommand(new InvokeCommand<Boolean>(RedisCommandType.SMOVE) {
             @Override
             public Boolean exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 return redissonClient.getSet(key, getCodec()).removeAll(Arrays.asList(value));
@@ -65,7 +64,7 @@ public class SetCommandImpl extends KeyCommandImpl implements PlatformSetCommand
 
     @Override
     public Integer size(final String key) {
-        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.SCARD) {
+        return invokeCommand(new InvokeCommand<Integer>(RedisCommandType.SCARD) {
             @Override
             public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 return redissonClient.getSet(key, getCodec()).size();
@@ -75,7 +74,7 @@ public class SetCommandImpl extends KeyCommandImpl implements PlatformSetCommand
 
     @Override
     public Boolean isMember(final String key, final Object o) {
-        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.SISMEMBER) {
+        return invokeCommand(new InvokeCommand<Boolean>(RedisCommandType.SISMEMBER) {
             @Override
             public Boolean exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 return redissonClient.getSet(key, getCodec()).contains(o);

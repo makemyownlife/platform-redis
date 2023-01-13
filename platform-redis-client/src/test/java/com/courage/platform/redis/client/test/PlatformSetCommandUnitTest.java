@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.test;
 
-import com.courage.platform.redis.client.RedisClient;
+import com.courage.platform.redis.client.RedisOperation;
 import org.redisson.config.Config;
 
 /**
@@ -11,13 +11,12 @@ public class PlatformSetCommandUnitTest {
     public static void main(String[] args) {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
-        RedisClient redisClient = new RedisClient(config);
-        redisClient.getPlatformSetCommand().addAndEx("myset", 109, "zhangyong");
+        RedisOperation redisOperation = new RedisOperation(config);
+        redisOperation.getSetCommand().addAndEx("myset", 109, "zhangyong");
 
-        redisClient.getPlatformSetCommand().addAndEx("myset", 100, "li林");
+        redisOperation.getSetCommand().addAndEx("myset", 100, "li林");
 
-        redisClient.getPlatformSetCommand().removes("myset", "zhangyong");
-
+        redisOperation.getSetCommand().removes("myset", "zhangyong");
     }
 
 }

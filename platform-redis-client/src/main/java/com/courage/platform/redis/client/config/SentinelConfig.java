@@ -8,7 +8,7 @@ import java.util.List;
  * 哨兵模式
  * Created by zhangyong on 2020/6/1.
  */
-public class SentinelServersConfig {
+public class SentinelConfig {
 
     private List<String> nodes;
 

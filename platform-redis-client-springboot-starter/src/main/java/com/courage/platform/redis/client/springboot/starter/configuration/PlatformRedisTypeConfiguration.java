@@ -1,7 +1,7 @@
 package com.courage.platform.redis.client.springboot.starter.configuration;
 
-import com.courage.platform.redis.client.config.ClusterServerConfig;
-import com.courage.platform.redis.client.config.PlatformSingleServerConfig;
+import com.courage.platform.redis.client.config.ClusterConfig;
+import com.courage.platform.redis.client.config.SingleConfig;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -24,17 +24,17 @@ public class PlatformRedisTypeConfiguration {
 
         @Bean(value = "platformSingleServerConfig")
         @ConfigurationProperties(prefix = "platform.redis.singleserver")
-        public PlatformSingleServerConfig getPlatformSingleServerConfig() {
-            PlatformSingleServerConfig config = new PlatformSingleServerConfig();
+        public SingleConfig getPlatformSingleServerConfig() {
+            SingleConfig config = new SingleConfig();
             return config;
         }
 
         @Bean
-        public Config singleServerConfig(PlatformSingleServerConfig platformSingleServerConfig) {
+        public Config singleServerConfig(SingleConfig singleConfig) {
             Config config = new Config();
-            config.useSingleServer().setAddress(platformSingleServerConfig.getAddress());
-            if (platformSingleServerConfig.getPassword() != null) {
-                config.useSingleServer().setPassword(platformSingleServerConfig.getPassword());
+            config.useSingleServer().setAddress(singleConfig.getAddress());
+            if (singleConfig.getPassword() != null) {
+                config.useSingleServer().setPassword(singleConfig.getPassword());
             }
             return config;
         }
@@ -48,15 +48,15 @@ public class PlatformRedisTypeConfiguration {
 
         @Bean(value = "platformClusterServerConfig")
         @ConfigurationProperties(prefix = "platform.redis.clusterserver")
-        public ClusterServerConfig getPlatformClusterServerConfig() {
-            ClusterServerConfig config = new ClusterServerConfig();
+        public ClusterConfig getPlatformClusterServerConfig() {
+            ClusterConfig config = new ClusterConfig();
             return config;
         }
 
         @Bean
-        public Config clusterServerConfig(ClusterServerConfig clusterServerConfig) {
+        public Config clusterServerConfig(ClusterConfig clusterConfig) {
             Config config = new Config();
-            for (String node : clusterServerConfig.getNodes()) {
+            for (String node : clusterConfig.getNodes()) {
                 config.useClusterServers().addNodeAddress(node);
             }
             return config;

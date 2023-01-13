@@ -1,6 +1,6 @@
 package com.courage.platform.redis.idgenerator;
 
-import com.courage.platform.redis.client.RedisClient;
+import com.courage.platform.redis.client.RedisOperation;
 import com.courage.platform.redis.client.command.AtomicCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +16,8 @@ public class IdGenerator {
 
     private AtomicCommand atomicCommand;
 
-    public IdGenerator(RedisClient redisClient) {
-        this.atomicCommand = redisClient.getPlatformAtomicCommand();
+    public IdGenerator(RedisOperation redisOperation) {
+        this.atomicCommand = redisOperation.getAtomicCommand();
     }
 
     /**
@@ -45,10 +45,7 @@ public class IdGenerator {
         //从本地缓冲中获取
         SeqEntity seqEntity = LocalSequence.getSeqEntity(tableName);
         if (seqEntity != null) {
-            return SnowFlakeIdGenerator.getUniqueId(
-                    seqEntity.getCurrentTime(),
-                    workerId.intValue(),
-                    seqEntity.getSeq());
+            return SnowFlakeIdGenerator.getUniqueId(seqEntity.getCurrentTime(), workerId.intValue(), seqEntity.getSeq());
         }
 
         //从redis自增一个步长,放入本地内存中待用
@@ -77,10 +74,6 @@ public class IdGenerator {
 
         Long uniqueId = SnowFlakeIdGenerator.getUniqueId(seqEntity.getCurrentTime(), workerId.intValue(), seqEntity.getSeq());
         return uniqueId;
-    }
-
-    public static void main(String[] args) {
-
     }
 
 }

@@ -1,6 +1,6 @@
 package com.courage.platform.redis.client.test;
 
-import com.courage.platform.redis.client.RedisClient;
+import com.courage.platform.redis.client.RedisOperation;
 import org.junit.Before;
 import org.junit.Test;
 import org.redisson.config.Config;
@@ -14,29 +14,29 @@ import java.util.Map;
  */
 public class HashCommandUnitTest {
 
-    private RedisClient redisClient;
+    private RedisOperation redisOperation;
 
     @Before
     public void start() {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
-        this.redisClient = new RedisClient(config);
+        this.redisOperation = new RedisOperation(config);
     }
 
     @Test
     public void setValue() {
         Map<String, Object> mapping = new HashMap<String, Object>();
         mapping.put("one", "张勇");
-        Object my = this.redisClient.getHashCommand().hset("myhash", "time", mapping);
+        Object my = this.redisOperation.getHashCommand().hset("myhash", "time", mapping);
         System.out.println(my);
         mapping.put("two", "高慧");
-        Object my1 = this.redisClient.getPlatformHashCommand().hset("myhash", "time", mapping);
+        Object my1 = this.redisOperation.getHashCommand().hset("myhash", "time", mapping);
         System.out.println(my1);
     }
 
     @Test
     public void get() {
-        Object my = this.redisClient.getPlatformHashCommand().hget("myhash", "time");
+        Object my = this.redisOperation.getHashCommand().hget("myhash", "time");
         System.out.println(my);
     }
 

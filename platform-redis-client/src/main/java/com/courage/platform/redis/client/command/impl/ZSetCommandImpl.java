@@ -1,9 +1,9 @@
 package com.courage.platform.redis.client.command.impl;
 
-import com.iflytek.training.framework.redis.command.PlatformInvokeCommand;
-import com.iflytek.training.framework.redis.command.PlatformZSetCommand;
-import com.iflytek.training.framework.redis.enums.PlatformRedisCodec;
-import com.iflytek.training.framework.redis.enums.PlatformRedisCommandType;
+import com.courage.platform.redis.client.command.InvokeCommand;
+import com.courage.platform.redis.client.command.ZSetCommand;
+import com.courage.platform.redis.client.enums.RedisCodec;
+import com.courage.platform.redis.client.enums.RedisCommandType;
 import org.redisson.api.*;
 
 import java.util.Arrays;
@@ -12,19 +12,19 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetCommand {
+public class ZSetCommandImpl extends KeyCommandImpl implements ZSetCommand {
 
     public ZSetCommandImpl(RedissonClient redissonClient) {
         super(redissonClient);
     }
 
-    public ZSetCommandImpl(RedissonClient redissonClient, PlatformRedisCodec platformRedisCodec) {
+    public ZSetCommandImpl(RedissonClient redissonClient, RedisCodec platformRedisCodec) {
         super(redissonClient, platformRedisCodec);
     }
 
     @Override
     public Integer zadd(final String key, final Map<Object, Double> scoreMembers) {
-        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZADD) {
+        return invokeCommand(new InvokeCommand<Integer>(RedisCommandType.ZADD) {
             @Override
             public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RFuture<Integer> future = getRedissonClient().getScoredSortedSet(key, getCodec()).addAllAsync(scoreMembers);
@@ -35,7 +35,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Integer zaddAndEx(final String key, final Map<Object, Double> scoreMembers, final int aliveSecond) {
-        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZADD) {
+        return invokeCommand(new InvokeCommand<Integer>(RedisCommandType.ZADD) {
             @Override
             public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RBatch rBatch = getRedissonClient().createBatch();
@@ -50,7 +50,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Boolean zadd(final String key, final double score, final Object member) {
-        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.ZADD) {
+        return invokeCommand(new InvokeCommand<Boolean>(RedisCommandType.ZADD) {
             @Override
             public Boolean exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, getCodec());
@@ -62,7 +62,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Integer zaddAndEx(final String key, final double score, final String member, final int aliveSecond) {
-        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZADD) {
+        return invokeCommand(new InvokeCommand<Integer>(RedisCommandType.ZADD) {
             @Override
             public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RBatch rBatch = getRedissonClient().createBatch();
@@ -77,7 +77,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Collection zrange(final String key, final int start, final int end) {
-        return invokeCommand(new PlatformInvokeCommand<Collection>(PlatformRedisCommandType.ZRANGE) {
+        return invokeCommand(new InvokeCommand<Collection>(RedisCommandType.ZRANGE) {
             @Override
             public Collection exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, getCodec());
@@ -89,7 +89,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Collection zrangeByScore(final String key, final double min, final double max) {
-        return invokeCommand(new PlatformInvokeCommand<Collection>(PlatformRedisCommandType.ZRANGE) {
+        return invokeCommand(new InvokeCommand<Collection>(RedisCommandType.ZRANGE) {
             @Override
             public Collection exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, getCodec());
@@ -101,7 +101,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Boolean zrem(final String key, final Object... members) {
-        return invokeCommand(new PlatformInvokeCommand<Boolean>(PlatformRedisCommandType.ZREM) {
+        return invokeCommand(new InvokeCommand<Boolean>(RedisCommandType.ZREM) {
             @Override
             public Boolean exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, getCodec());
@@ -113,7 +113,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Integer zremrangeByScore(final String key, final double min, final double max) {
-        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZREMRANGEBYSCORE) {
+        return invokeCommand(new InvokeCommand<Integer>(RedisCommandType.ZREMRANGEBYSCORE) {
             @Override
             public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSetAsync rScoredSortedSetAsync = redissonClient.getScoredSortedSet(key, getCodec());
@@ -125,7 +125,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Double zincrbyAndEx(final String key, final double score, final Object member, final int aliveSecond) {
-        return invokeCommand(new PlatformInvokeCommand<Double>(PlatformRedisCommandType.ZINCRBY) {
+        return invokeCommand(new InvokeCommand<Double>(RedisCommandType.ZINCRBY) {
             @Override
             public Double exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RBatch rBatch = getRedissonClient().createBatch();
@@ -139,7 +139,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Double zincrby(final String key, final double score, final Object member) {
-        return invokeCommand(new PlatformInvokeCommand<Double>(PlatformRedisCommandType.ZINCRBY) {
+        return invokeCommand(new InvokeCommand<Double>(RedisCommandType.ZINCRBY) {
             @Override
             public Double exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSet rScoredSortedSet = getRedissonClient().getScoredSortedSet(key, getCodec());
@@ -151,7 +151,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Integer zrank(final String key, final Object member) {
-        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZRANK) {
+        return invokeCommand(new InvokeCommand<Integer>(RedisCommandType.ZRANK) {
             @Override
             public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSet rScoredSortedSet = getRedissonClient().getScoredSortedSet(key, getCodec());
@@ -162,7 +162,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Integer zrevrank(final String key, final Object member) {
-        return invokeCommand(new PlatformInvokeCommand<Integer>(PlatformRedisCommandType.ZREVRANK) {
+        return invokeCommand(new InvokeCommand<Integer>(RedisCommandType.ZREVRANK) {
             @Override
             public Integer exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSet rScoredSortedSet = getRedissonClient().getScoredSortedSet(key, getCodec());
@@ -173,7 +173,7 @@ public class ZSetCommandImpl extends KeyCommandImpl implements PlatformZSetComma
 
     @Override
     public Collection zrevrange(final String key, final int start, final int end) {
-        return invokeCommand(new PlatformInvokeCommand<Collection>(PlatformRedisCommandType.ZREVRANK) {
+        return invokeCommand(new InvokeCommand<Collection>(RedisCommandType.ZREVRANK) {
             @Override
             public Collection exe(RedissonClient redissonClient) throws ExecutionException, InterruptedException {
                 RScoredSortedSet rScoredSortedSet = getRedissonClient().getScoredSortedSet(key, getCodec());

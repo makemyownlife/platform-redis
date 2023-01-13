@@ -3,7 +3,7 @@ package com.courage.platform.redis.client.config;
 /**
  * Created by zhangyong on 2020/2/6.
  */
-public class PlatformSingleServerConfig {
+public class SingleConfig {
 
     /**
      * Redis server address
