@@ -13,8 +13,8 @@ public class PlatformListCommandUnitTest {
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
         RedisOperation redisOperation = new RedisOperation(config);
 
-        redisOperation.getPlatformListCommand().lpush("list", "zhangyong张勇");
-        redisOperation.getPlatformListCommand().rpush("list", "gaohui");
+        redisOperation.getListCommand().lpush("list", "zhangyong张勇");
+        redisOperation.getListCommand().rpush("list", "gaohui");
     }
 
 }
