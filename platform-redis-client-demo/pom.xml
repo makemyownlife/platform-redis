@@ -30,12 +30,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.courage</groupId>
-            <artifactId>platform-redis-client-spring-boot-starter</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-
     </dependencies>
 
     <dependencyManagement>

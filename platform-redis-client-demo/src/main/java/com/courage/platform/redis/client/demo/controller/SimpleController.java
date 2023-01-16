@@ -18,10 +18,6 @@ public class SimpleController {
     @Autowired
     private RedisOperation redisOperation;
 
-    @Autowired
-    private StringCommand sss;
-
-
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
     public String hellodanbiao() {
