@@ -12,7 +12,7 @@ public class RedisMessage<T> implements Serializable {
         this.data = data;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
