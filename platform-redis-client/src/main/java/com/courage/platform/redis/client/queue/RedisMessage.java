@@ -2,13 +2,13 @@ package com.courage.platform.redis.client.queue;
 
 import java.io.Serializable;
 
-public class RedisMessage implements Serializable {
+public class RedisMessage<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Object data;
+    private T data;
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 
