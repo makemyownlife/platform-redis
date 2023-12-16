@@ -7,7 +7,6 @@ import com.courage.platform.redis.client.config.SingleConfig;
 import com.courage.platform.redis.client.utils.ConfigBuilder;
 import com.courage.platform.redis.client.utils.IdGenerator;
 import org.redisson.config.Config;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,8 +19,8 @@ import org.springframework.context.annotation.Primary;
  * 根据type类型不同 配置不同的
  * Created by zhangyong on 2020/1/21.
  */
-@AutoConfigureBefore(RedisTypeConfiguration.class)
-public class RedisTypeConfiguration {
+@Configuration
+public class RedisClientAutoConfiguration {
 
     @Configuration
     @ConditionalOnMissingBean(Config.class)

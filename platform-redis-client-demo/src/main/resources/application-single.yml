@@ -1,5 +1,5 @@
-platform:
+spring:
   redis:
-    type: SINGLE
-    singleserver:
-      address: redis://127.0.0.1:6379
+    type: single
+    single:
+      address: 127.0.0.1:6379
