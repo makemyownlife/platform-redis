@@ -1,3 +1,3 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.courage.platform.redis.client.springboot.starter.configuration.RedisClientAutoConfiguration
+cn.javayong.platform.redis.client.springboot.starter.configuration.RedisClientAutoConfiguration
